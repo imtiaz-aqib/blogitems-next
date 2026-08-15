@@ -12,14 +12,6 @@ const nextConfig: NextConfig = {
         hostname: "localhost",
       },
       {
-        protocol: "http",
-        hostname: "aqib-xyz.stackstaging.com",
-      },
-      {
-        protocol: "https",
-        hostname: "aqib-xyz.stackstaging.com",
-      },
-      {
         protocol: "https",
         hostname: "blogitems.com",
       },
