@@ -15,63 +15,108 @@ export interface Post {
   };
 }
 
+// Helper to determine if we should attempt fetch or fail fast
+function shouldFetch(): boolean {
+  if (!API_URL) return false;
+  // If running in Vercel cloud build and API URL points to local domain (.local or localhost), fail fast
+  if (process.env.VERCEL && (API_URL.includes(".local") || API_URL.includes("localhost"))) {
+    return false;
+  }
+  return true;
+}
+
 export async function getAllPosts(): Promise<Post[]> {
-  const res = await fetch(`${API_URL}/posts?_embed&per_page=12`, {
-    next: {
-      revalidate: 60,
-    },
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch posts");
-  }
-
-  return res.json();
-}
-
-export async function getPostBySlug(slug: string): Promise<Post | null> {
-  const res = await fetch(`${API_URL}/posts?slug=${slug}&_embed`, {
-    next: {
-      revalidate: 60,
-    },
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch post");
-  }
-
-  const posts: Post[] = await res.json();
-
-  return posts[0] ?? null;
-}
-
-export async function getPageBySlug(slug: string): Promise<Post | null> {
-  const res = await fetch(`${API_URL}/pages?slug=${slug}&_embed`, {
-    next: {
-      revalidate: 60,
-    },
-  });
-
-  if (!res.ok) {
-    return null;
-  }
-
-  const pages: Post[] = await res.json();
-  return pages[0] ?? null;
-}
-
-export async function getAllPages(): Promise<Post[]> {
-  const res = await fetch(`${API_URL}/pages?_embed&per_page=50`, {
-    next: {
-      revalidate: 60,
-    },
-  });
-
-  if (!res.ok) {
+  if (!shouldFetch()) {
     return [];
   }
 
-  return res.json();
+  try {
+    const res = await fetch(`${API_URL}/posts?_embed&per_page=12`, {
+      signal: AbortSignal.timeout(3000),
+      next: {
+        revalidate: 60,
+      },
+    });
+
+    if (!res.ok) {
+      return [];
+    }
+
+    return await res.json();
+  } catch {
+    return [];
+  }
+}
+
+export async function getPostBySlug(slug: string): Promise<Post | null> {
+  if (!shouldFetch()) {
+    return null;
+  }
+
+  try {
+    const res = await fetch(`${API_URL}/posts?slug=${slug}&_embed`, {
+      signal: AbortSignal.timeout(3000),
+      next: {
+        revalidate: 60,
+      },
+    });
+
+    if (!res.ok) {
+      return null;
+    }
+
+    const posts: Post[] = await res.json();
+    return posts[0] ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export async function getPageBySlug(slug: string): Promise<Post | null> {
+  if (!shouldFetch()) {
+    return null;
+  }
+
+  try {
+    const res = await fetch(`${API_URL}/pages?slug=${slug}&_embed`, {
+      signal: AbortSignal.timeout(3000),
+      next: {
+        revalidate: 60,
+      },
+    });
+
+    if (!res.ok) {
+      return null;
+    }
+
+    const pages: Post[] = await res.json();
+    return pages[0] ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export async function getAllPages(): Promise<Post[]> {
+  if (!shouldFetch()) {
+    return [];
+  }
+
+  try {
+    const res = await fetch(`${API_URL}/pages?_embed&per_page=50`, {
+      signal: AbortSignal.timeout(3000),
+      next: {
+        revalidate: 60,
+      },
+    });
+
+    if (!res.ok) {
+      return [];
+    }
+
+    return await res.json();
+  } catch {
+    return [];
+  }
 }
 
 export function formatPostDate(dateString?: string): string {

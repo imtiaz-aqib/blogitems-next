@@ -35,12 +35,14 @@ const FALLBACK_PAGES: Record<string, Post> = {
 export async function generateStaticParams() {
   try {
     const pages = await getAllPages();
-    return pages.map((page) => ({
-      slug: page.slug,
-    }));
+    if (pages && pages.length > 0) {
+      return pages.map((page) => ({ slug: page.slug }));
+    }
   } catch {
-    return [{ slug: "about" }];
+    // fallback
   }
+
+  return Object.keys(FALLBACK_PAGES).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -110,7 +112,7 @@ export default async function DynamicWordPressPage({
           {/* Back link */}
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#756df3] hover:underline mb-6"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#ffcb7d] hover:underline mb-6"
           >
             &larr; Back to Home
           </Link>
@@ -118,14 +120,14 @@ export default async function DynamicWordPressPage({
           <span className="ui-badge-yellow block mb-4">BlogItems Page</span>
 
           <h1
-            className="text-3xl md:text-5xl font-bold tracking-tight text-[#000000] mb-6 leading-tight"
+            className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6 leading-tight"
             dangerouslySetInnerHTML={{ __html: sanitizeHtml(page.title.rendered) }}
           />
 
-          <div className="flex flex-wrap items-center gap-3 text-xs md:text-sm text-[#333344] font-medium pt-4 border-t border-[#000000]/15">
+          <div className="flex flex-wrap items-center gap-3 text-xs md:text-sm text-white/90 font-medium pt-4 border-t border-white/20">
             <span>Last Updated {dateFormatted}</span>
             <span>&middot;</span>
-            <span>By <strong className="text-[#756df3]">{authorName}</strong></span>
+            <span>By <strong className="text-[#ffcb7d]">{authorName}</strong></span>
             <span>&middot;</span>
             <span className="bg-[#ffcb7d]/50 px-2 py-0.5 rounded text-[#232141] font-semibold">{readingTime}</span>
           </div>
