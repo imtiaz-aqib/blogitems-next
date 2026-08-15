@@ -148,10 +148,10 @@ export default async function HomePage() {
 
           {/* Right Hero Mascot & Animation Banner */}
           <div className="lg:col-span-5 flex items-center justify-center relative">
-            <div className="w-full max-w-[480px] aspect-[552/617] relative">
+            <div className="w-full max-w-[480px] aspect-square relative rounded-3xl overflow-hidden drop-shadow-2xl">
               <Image
-                src="/mb-hero-animated.svg"
-                alt="BlogItems Hero Illustration"
+                src="/hero-cat.jpg"
+                alt="BlogItems Hero Cat Mascot Illustration"
                 fill
                 className="object-contain"
                 priority
