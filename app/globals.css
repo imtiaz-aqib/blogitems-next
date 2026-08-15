@@ -1,26 +1,131 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --purple: #756df3;
+  --purple-hover: #5f58d6;
+  --purple-dark: #4a44b8;
+  --purple-mid: #e4e3fd;
+  --yellow: #ffcb7d;
+  --light-grey: #fafafd;
+  --dark-navy: #232141;
+  --card-shadow: 4px 5px #232141;
+  --card-shadow-hover: 6px 7px #232141;
+  --font-display: var(--font-unbounded), sans-serif;
+  --font-body: var(--font-poppins), sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--light-grey);
+  color: #000000;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+/* Custom Neo-brutalist Card Shadows & Tokens */
+.ui-card-shadow {
+  box-shadow: var(--card-shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ui-card-shadow:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.ui-btn-primary {
+  background-color: var(--purple-hover);
+  color: #ffffff;
+  border: 1.5px solid var(--dark-navy);
+  box-shadow: 4px 5px var(--dark-navy);
+  transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.ui-btn-primary:hover {
+  background-color: var(--purple-dark);
+  transform: translateY(-2px);
+  box-shadow: 6px 7px var(--dark-navy);
+}
+
+.ui-badge-yellow {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dark-navy);
+  background-color: var(--yellow);
+  border: 2px solid var(--dark-navy);
+  padding: 4px 13px;
+  border-radius: 100px;
+  display: inline-block;
+}
+
+/* Vivid #756DF3 Diagonal Stripe Background for Hero Header */
+.ui-header-pattern {
+  background-color: #756df3;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.06) 0,
+    rgba(255, 255, 255, 0.06) 12px,
+    transparent 12px,
+    transparent 28px
+  );
+}
+
+/* Typography styles for WordPress HTML Content */
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin-top: 1.5em;
+  margin-bottom: 0.6em;
+  color: #000000;
+}
+
+.prose p {
+  margin-bottom: 1.25em;
+  line-height: 1.7;
+}
+
+.prose a {
+  color: var(--purple);
+  text-decoration: underline;
+}
+
+.prose img {
+  border-radius: 12px;
+  border: 1px solid #000000;
+  box-shadow: 4px 5px var(--dark-navy);
+  margin: 1.5em 0;
+}
+
+.prose pre {
+  background-color: var(--dark-navy);
+  color: #ffffff;
+  padding: 1.25rem;
+  border-radius: 12px;
+  border: 1px solid #000000;
+  overflow-x: auto;
+  font-family: monospace;
+}
+
+.prose code {
+  background-color: var(--purple-mid);
+  color: var(--dark-navy);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.prose pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
 }
