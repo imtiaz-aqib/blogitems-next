@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import HeroLottie from "@/components/HeroLottie";
 import { getAllPosts, Post, formatPostDate, calculateReadingTime } from "@/lib/wordpress";
 import type { Metadata } from "next";
 
@@ -146,17 +147,9 @@ export default async function HomePage() {
             </div>
           </div>
 
-          {/* Right Hero Mascot & Animation Banner */}
+          {/* Right Hero Lottie Animation Banner */}
           <div className="lg:col-span-5 flex items-center justify-center relative">
-            <div className="w-full max-w-[480px] aspect-square relative rounded-3xl overflow-hidden drop-shadow-2xl">
-              <Image
-                src="/hero-cat.jpg"
-                alt="BlogItems Hero Cat Mascot Illustration"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
+            <HeroLottie />
           </div>
         </div>
       </section>
