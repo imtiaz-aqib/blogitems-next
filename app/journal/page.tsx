@@ -1,4 +1,4 @@
-import { getPaginatedPosts, getAllPosts, Post } from "@/lib/wordpress";
+import { getAllPosts, Post } from "@/lib/wordpress";
 import BlogHeader from "@/components/BlogHeader";
 import FeaturedPostCard from "@/components/FeaturedPostCard";
 import PostCard from "@/components/PostCard";
@@ -71,45 +71,31 @@ export default async function JournalPage({
   const pageSize = 6;
 
   let posts: Post[] = [];
-  let totalPosts = 0;
 
   try {
-    const result = await getPaginatedPosts(currentPage, pageSize);
-    posts = result?.posts || [];
-    totalPosts = result?.totalPosts || posts.length;
+    posts = await getAllPosts();
   } catch {
-    posts = [];
-    totalPosts = 0;
-  }
-
-  // If WordPress API is unreachable or returned empty, fetch all or fallback
-  if (!posts || posts.length === 0) {
-    try {
-      posts = await getAllPosts();
-      totalPosts = posts.length;
-    } catch {
-      posts = FALLBACK_POSTS;
-      totalPosts = FALLBACK_POSTS.length;
-    }
-  }
-
-  if (!posts || posts.length === 0) {
     posts = FALLBACK_POSTS;
-    totalPosts = FALLBACK_POSTS.length;
   }
+
+  if (!posts || !Array.isArray(posts) || posts.length === 0) {
+    posts = FALLBACK_POSTS;
+  }
+
+  const totalPosts = posts.length;
 
   let featuredPost: Post | null = null;
   let gridPosts: Post[] = [];
 
-  if (currentPage === 1 && posts.length > 0) {
+  if (currentPage === 1) {
     featuredPost = posts[0] || null;
-    gridPosts = posts.slice(1);
+    gridPosts = posts.slice(1, 1 + pageSize);
   } else {
     featuredPost = null;
     const startIndex = (currentPage - 1) * pageSize;
     gridPosts = posts.slice(startIndex, startIndex + pageSize);
-    if (gridPosts.length === 0) {
-      gridPosts = posts;
+    if (gridPosts.length === 0 && posts.length > 0) {
+      gridPosts = posts.slice(0, pageSize);
     }
   }
 
