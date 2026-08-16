@@ -30,6 +30,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      style={{ colorScheme: "light" }}
       className={`${unbounded.variable} ${poppins.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#fafafd] text-[#000000]">

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: light !important;
   --purple: #756df3;
   --purple-hover: #5f58d6;
   --purple-dark: #4a44b8;
@@ -14,9 +15,10 @@
   --font-body: var(--font-poppins), sans-serif;
 }
 
-body {
-  background-color: var(--light-grey);
-  color: #000000;
+html, body {
+  color-scheme: light !important;
+  background-color: #fafafd !important;
+  color: #000000 !important;
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.65;
