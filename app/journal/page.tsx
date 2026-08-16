@@ -1,4 +1,4 @@
-import { getPaginatedPosts, Post } from "@/lib/wordpress";
+import { getPaginatedPosts, getAllPosts, Post } from "@/lib/wordpress";
 import BlogHeader from "@/components/BlogHeader";
 import FeaturedPostCard from "@/components/FeaturedPostCard";
 import PostCard from "@/components/PostCard";
@@ -63,10 +63,11 @@ const FALLBACK_POSTS: Post[] = [
 export default async function JournalPage({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string }>;
+  searchParams?: { page?: string } | Promise<{ page?: string }>;
 }) {
-  const { page } = await searchParams;
-  const currentPage = Math.max(1, parseInt(page || "1", 10));
+  const resolvedSearchParams = searchParams ? await Promise.resolve(searchParams) : {};
+  const pageStr = resolvedSearchParams.page;
+  const currentPage = Math.max(1, parseInt(pageStr || "1", 10));
   const pageSize = 6;
 
   let posts: Post[] = [];
@@ -74,11 +75,22 @@ export default async function JournalPage({
 
   try {
     const result = await getPaginatedPosts(currentPage, pageSize);
-    posts = result.posts || [];
-    totalPosts = result.totalPosts || posts.length;
+    posts = result?.posts || [];
+    totalPosts = result?.totalPosts || posts.length;
   } catch {
-    posts = FALLBACK_POSTS;
-    totalPosts = FALLBACK_POSTS.length;
+    posts = [];
+    totalPosts = 0;
+  }
+
+  // If WordPress API is unreachable or returned empty, fetch all or fallback
+  if (!posts || posts.length === 0) {
+    try {
+      posts = await getAllPosts();
+      totalPosts = posts.length;
+    } catch {
+      posts = FALLBACK_POSTS;
+      totalPosts = FALLBACK_POSTS.length;
+    }
   }
 
   if (!posts || posts.length === 0) {
@@ -90,11 +102,15 @@ export default async function JournalPage({
   let gridPosts: Post[] = [];
 
   if (currentPage === 1 && posts.length > 0) {
-    featuredPost = posts[0];
+    featuredPost = posts[0] || null;
     gridPosts = posts.slice(1);
   } else {
     featuredPost = null;
-    gridPosts = posts;
+    const startIndex = (currentPage - 1) * pageSize;
+    gridPosts = posts.slice(startIndex, startIndex + pageSize);
+    if (gridPosts.length === 0) {
+      gridPosts = posts;
+    }
   }
 
   return (
@@ -111,7 +127,7 @@ export default async function JournalPage({
         {gridPosts.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {gridPosts.map((post) => (
-              <PostCard key={post.id} post={post} />
+              <PostCard key={post.id || post.slug} post={post} />
             ))}
           </div>
         )}
