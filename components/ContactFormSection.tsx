@@ -19,7 +19,8 @@ export default function ContactFormSection() {
   };
 
   return (
-    <section className="max-w-[1140px] mx-auto px-6 py-6 md:py-10">
+    <div className="max-w-[1140px] mx-auto px-6 py-6 md:py-10 flex flex-col gap-14">
+      {/* 1. Main MetalBear Chat & Form Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
         {/* Left Column: MetalBear Copy & Bullet List */}
         <div className="lg:col-span-5 flex flex-col items-start justify-center">
@@ -196,6 +197,65 @@ export default function ContactFormSection() {
           )}
         </div>
       </div>
-    </section>
+
+      {/* 2. Info Cards Section: Email Us | Location | Technical Discovery */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-[#e4e4ee]">
+        {/* Email Us Card */}
+        <div className="bg-white border-2 border-[#000000] rounded-xl p-5 shadow-[4px_4px_0px_#000000] flex items-start gap-4 hover:-translate-y-0.5 transition-transform">
+          <div className="w-10 h-10 rounded-lg bg-[#756df3] text-white flex items-center justify-center flex-shrink-0 border border-[#000000]">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="M22 6L12 13L2 6" />
+            </svg>
+          </div>
+          <div>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#888899] mb-1">
+              Email Us
+            </h3>
+            <a href="mailto:hi@blogitems.com" className="text-sm font-bold text-[#000000] hover:text-[#5f58d6] transition">
+              hi@blogitems.com
+            </a>
+            <p className="text-xs text-[#888899] mt-0.5">Response within 24 hours</p>
+          </div>
+        </div>
+
+        {/* Office Location Card */}
+        <div className="bg-white border-2 border-[#000000] rounded-xl p-5 shadow-[4px_4px_0px_#000000] flex items-start gap-4 hover:-translate-y-0.5 transition-transform">
+          <div className="w-10 h-10 rounded-lg bg-[#ffcb7d] text-[#000000] flex items-center justify-center flex-shrink-0 border border-[#000000]">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+          </div>
+          <div>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#888899] mb-1">
+              HQ &amp; Remote Operations
+            </h3>
+            <p className="text-sm font-bold text-[#000000]">
+              San Francisco, CA &amp; Distributed
+            </p>
+            <p className="text-xs text-[#888899] mt-0.5">Serving clients globally</p>
+          </div>
+        </div>
+
+        {/* Fast Technical Discovery Card */}
+        <div className="bg-[#e4e3fd] border-2 border-[#000000] rounded-xl p-5 shadow-[4px_4px_0px_#000000] flex items-start gap-4 hover:-translate-y-0.5 transition-transform">
+          <div className="w-10 h-10 rounded-lg bg-[#000000] text-white flex items-center justify-center flex-shrink-0 border border-[#000000]">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+          </div>
+          <div>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#000000] mb-1">
+              Fast Discovery
+            </h3>
+            <p className="text-xs text-[#444455] leading-relaxed">
+              Book a 30-min architectural discovery call with our senior engineers.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
