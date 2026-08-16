@@ -209,8 +209,8 @@ export default async function JournalPage() {
           </div>
         )}
 
-        {/* Pagination Bar */}
-        <Pagination />
+        {/* Dynamic Pagination Bar */}
+        <Pagination totalPosts={posts.length} pageSize={6} />
       </div>
 
       {/* FAQ Accordion Section */}
