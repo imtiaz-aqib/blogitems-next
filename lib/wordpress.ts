@@ -24,7 +24,6 @@ export interface PaginatedPostsResult {
 // Helper to determine if we should attempt fetch or fail fast
 function shouldFetch(): boolean {
   if (!API_URL) return false;
-  // If running in Vercel cloud build and API URL points to local domain (.local or localhost), fail fast
   if (process.env.VERCEL && (API_URL.includes(".local") || API_URL.includes("localhost"))) {
     return false;
   }
@@ -43,8 +42,12 @@ export async function getPaginatedPosts(
     const res = await fetch(
       `${API_URL}/posts?_embed&page=${page}&per_page=${perPage}`,
       {
-        signal: AbortSignal.timeout(10000),
-        cache: "no-store",
+        signal: AbortSignal.timeout(8000),
+        next: { revalidate: 5 },
+        headers: {
+          "User-Agent": "BlogItems-NextJS-Client/1.0",
+          "Accept": "application/json",
+        },
       }
     );
 
@@ -57,9 +60,9 @@ export async function getPaginatedPosts(
     const posts: Post[] = await res.json();
 
     return {
-      posts,
-      totalPosts: totalPosts || posts.length,
-      totalPages: totalPages || (posts.length > 0 ? 1 : 0),
+      posts: Array.isArray(posts) ? posts : [],
+      totalPosts: totalPosts || (Array.isArray(posts) ? posts.length : 0),
+      totalPages: totalPages || (Array.isArray(posts) && posts.length > 0 ? 1 : 0),
     };
   } catch (e) {
     console.error("getPaginatedPosts error:", e);
@@ -74,15 +77,20 @@ export async function getAllPosts(): Promise<Post[]> {
 
   try {
     const res = await fetch(`${API_URL}/posts?_embed&per_page=100`, {
-      signal: AbortSignal.timeout(10000),
-      cache: "no-store",
+      signal: AbortSignal.timeout(8000),
+      next: { revalidate: 5 },
+      headers: {
+        "User-Agent": "BlogItems-NextJS-Client/1.0",
+        "Accept": "application/json",
+      },
     });
 
     if (!res.ok) {
       return [];
     }
 
-    return await res.json();
+    const posts = await res.json();
+    return Array.isArray(posts) ? posts : [];
   } catch {
     return [];
   }
@@ -95,8 +103,12 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
 
   try {
     const res = await fetch(`${API_URL}/posts?slug=${slug}&_embed`, {
-      signal: AbortSignal.timeout(10000),
-      cache: "no-store",
+      signal: AbortSignal.timeout(8000),
+      next: { revalidate: 5 },
+      headers: {
+        "User-Agent": "BlogItems-NextJS-Client/1.0",
+        "Accept": "application/json",
+      },
     });
 
     if (!res.ok) {
@@ -104,7 +116,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
     }
 
     const posts: Post[] = await res.json();
-    return posts[0] ?? null;
+    return Array.isArray(posts) && posts.length > 0 ? posts[0] : null;
   } catch {
     return null;
   }
@@ -117,8 +129,12 @@ export async function getPageBySlug(slug: string): Promise<Post | null> {
 
   try {
     const res = await fetch(`${API_URL}/pages?slug=${slug}&_embed`, {
-      signal: AbortSignal.timeout(10000),
-      cache: "no-store",
+      signal: AbortSignal.timeout(8000),
+      next: { revalidate: 5 },
+      headers: {
+        "User-Agent": "BlogItems-NextJS-Client/1.0",
+        "Accept": "application/json",
+      },
     });
 
     if (!res.ok) {
@@ -126,7 +142,7 @@ export async function getPageBySlug(slug: string): Promise<Post | null> {
     }
 
     const pages: Post[] = await res.json();
-    return pages[0] ?? null;
+    return Array.isArray(pages) && pages.length > 0 ? pages[0] : null;
   } catch {
     return null;
   }
@@ -139,15 +155,20 @@ export async function getAllPages(): Promise<Post[]> {
 
   try {
     const res = await fetch(`${API_URL}/pages?_embed&per_page=50`, {
-      signal: AbortSignal.timeout(10000),
-      cache: "no-store",
+      signal: AbortSignal.timeout(8000),
+      next: { revalidate: 5 },
+      headers: {
+        "User-Agent": "BlogItems-NextJS-Client/1.0",
+        "Accept": "application/json",
+      },
     });
 
     if (!res.ok) {
       return [];
     }
 
-    return await res.json();
+    const pages = await res.json();
+    return Array.isArray(pages) ? pages : [];
   } catch {
     return [];
   }
