@@ -60,14 +60,25 @@ const FALLBACK_POSTS: Post[] = [
   },
 ];
 
-export default async function JournalPage(props: {
+export default async function JournalPage(props?: {
   searchParams?: Promise<{ page?: string }>;
 }) {
-  const searchParams = props?.searchParams ? await props.searchParams : {};
-  const pageStr = searchParams?.page;
-  const currentPage = Math.max(1, parseInt(pageStr || "1", 10));
-  const pageSize = 6;
+  let currentPage = 1;
+  try {
+    if (props && props.searchParams) {
+      const sp = await props.searchParams;
+      if (sp && sp.page) {
+        const parsed = parseInt(sp.page, 10);
+        if (!isNaN(parsed) && parsed > 0) {
+          currentPage = parsed;
+        }
+      }
+    }
+  } catch {
+    currentPage = 1;
+  }
 
+  const pageSize = 6;
   let posts: Post[] = [];
 
   try {
@@ -110,8 +121,8 @@ export default async function JournalPage(props: {
         {/* 3-Column Blog Grid */}
         {gridPosts.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {gridPosts.map((post) => (
-              <PostCard key={post.id || post.slug} post={post} />
+            {gridPosts.map((post, idx) => (
+              <PostCard key={post?.id || post?.slug || idx} post={post} />
             ))}
           </div>
         )}
