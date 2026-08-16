@@ -60,13 +60,11 @@ const FALLBACK_POSTS: Post[] = [
   },
 ];
 
-export default async function JournalPage({
-  searchParams,
-}: {
-  searchParams?: { page?: string } | Promise<{ page?: string }>;
+export default async function JournalPage(props: {
+  searchParams?: Promise<{ page?: string }>;
 }) {
-  const resolvedSearchParams = searchParams ? await Promise.resolve(searchParams) : {};
-  const pageStr = resolvedSearchParams.page;
+  const searchParams = props?.searchParams ? await props.searchParams : {};
+  const pageStr = searchParams?.page;
   const currentPage = Math.max(1, parseInt(pageStr || "1", 10));
   const pageSize = 6;
 
