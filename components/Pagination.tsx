@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 interface PaginationProps {
@@ -9,25 +11,28 @@ interface PaginationProps {
 
 export default function Pagination({
   currentPage = 1,
-  totalPosts = 10,
+  totalPosts = 0,
   pageSize = 6,
   baseUrl = "/journal",
 }: PaginationProps) {
-  const totalPages = Math.ceil(totalPosts / pageSize);
+  const safePageSize = Math.max(1, pageSize || 6);
+  const safeTotalPosts = Math.max(0, totalPosts || 0);
+  const totalPages = Math.min(50, Math.ceil(safeTotalPosts / safePageSize));
 
   // If 1 or fewer pages, hide pagination cleanly
-  if (totalPages <= 1) {
+  if (!isFinite(totalPages) || totalPages <= 1) {
     return null;
   }
 
+  const safeCurrentPage = Math.min(Math.max(1, currentPage), totalPages);
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
     <nav className="flex items-center justify-center gap-2 my-12" aria-label="Blog pagination">
       {/* Previous Button */}
-      {currentPage > 1 && (
+      {safeCurrentPage > 1 && (
         <Link
-          href={`${baseUrl}?page=${currentPage - 1}`}
+          href={`${baseUrl}?page=${safeCurrentPage - 1}`}
           className="px-3.5 h-10 rounded-lg flex items-center justify-center text-xs sm:text-sm font-semibold bg-white text-[#232141] border border-[#000000] shadow-[2px_2px_#000000] hover:bg-[#ffcb7d] transition"
         >
           &larr; Prev
@@ -36,7 +41,7 @@ export default function Pagination({
 
       {/* Page Number Buttons */}
       {pages.map((page) => {
-        const isActive = page === currentPage;
+        const isActive = page === safeCurrentPage;
         return (
           <Link
             key={page}
@@ -53,9 +58,9 @@ export default function Pagination({
       })}
 
       {/* Next Button */}
-      {currentPage < totalPages && (
+      {safeCurrentPage < totalPages && (
         <Link
-          href={`${baseUrl}?page=${currentPage + 1}`}
+          href={`${baseUrl}?page=${safeCurrentPage + 1}`}
           className="px-3.5 h-10 rounded-lg flex items-center justify-center text-xs sm:text-sm font-semibold bg-white text-[#232141] border border-[#000000] shadow-[2px_2px_#000000] hover:bg-[#ffcb7d] transition"
         >
           Next &rarr;
