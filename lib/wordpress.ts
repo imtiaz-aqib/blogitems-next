@@ -1,6 +1,6 @@
 import DOMPurify from "isomorphic-dompurify";
 
-const API_URL = process.env.WORDPRESS_API_URL;
+const API_URL = process.env.WORDPRESS_API_URL || "http://aqib-xyz.stackstaging.com/wp-json/wp/v2";
 
 export interface Post {
   id: number;
