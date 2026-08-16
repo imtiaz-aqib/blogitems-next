@@ -29,21 +29,17 @@ function shouldFetch(): boolean {
   return true;
 }
 
-// Safe fetch wrapper with 15-second timeout and clean ISR options for Next.js 16
+// Clean, bulletproof fetch wrapper without signal conflicts for Next.js 16
 async function safeFetch(url: string, options: RequestInit = {}): Promise<Response | null> {
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000);
     const res = await fetch(url, {
       next: { revalidate: 60, tags: ["posts"] },
-      signal: controller.signal,
       headers: {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
         "Accept": "application/json",
         ...(options.headers || {}),
       },
     });
-    clearTimeout(timeoutId);
     if (!res.ok) return null;
     return res;
   } catch {
