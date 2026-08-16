@@ -21,13 +21,35 @@ export interface PaginatedPostsResult {
   totalPages: number;
 }
 
-// Helper to determine if we should attempt fetch or fail fast
 function shouldFetch(): boolean {
   if (!API_URL) return false;
   if (process.env.VERCEL && (API_URL.includes(".local") || API_URL.includes("localhost"))) {
     return false;
   }
   return true;
+}
+
+// Safe fetch wrapper that never throws unhandled errors
+async function safeFetch(url: string, options: RequestInit = {}): Promise<Response | null> {
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 4000);
+    const res = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+      next: { revalidate: 60 },
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "Accept": "application/json",
+        ...(options.headers || {}),
+      },
+    });
+    clearTimeout(timeoutId);
+    if (!res.ok) return null;
+    return res;
+  } catch {
+    return null;
+  }
 }
 
 export async function getPaginatedPosts(
@@ -38,23 +60,12 @@ export async function getPaginatedPosts(
     return { posts: [], totalPosts: 0, totalPages: 0 };
   }
 
+  const res = await safeFetch(`${API_URL}/posts?_embed&page=${page}&per_page=${perPage}`);
+  if (!res) {
+    return { posts: [], totalPosts: 0, totalPages: 0 };
+  }
+
   try {
-    const res = await fetch(
-      `${API_URL}/posts?_embed&page=${page}&per_page=${perPage}`,
-      {
-        signal: AbortSignal.timeout(8000),
-        next: { revalidate: 5 },
-        headers: {
-          "User-Agent": "BlogItems-NextJS-Client/1.0",
-          "Accept": "application/json",
-        },
-      }
-    );
-
-    if (!res.ok) {
-      return { posts: [], totalPosts: 0, totalPages: 0 };
-    }
-
     const totalPosts = parseInt(res.headers.get("x-wp-total") || "0", 10);
     const totalPages = parseInt(res.headers.get("x-wp-totalpages") || "0", 10);
     const posts: Post[] = await res.json();
@@ -64,8 +75,7 @@ export async function getPaginatedPosts(
       totalPosts: totalPosts || (Array.isArray(posts) ? posts.length : 0),
       totalPages: totalPages || (Array.isArray(posts) && posts.length > 0 ? 1 : 0),
     };
-  } catch (e) {
-    console.error("getPaginatedPosts error:", e);
+  } catch {
     return { posts: [], totalPosts: 0, totalPages: 0 };
   }
 }
@@ -75,20 +85,12 @@ export async function getAllPosts(): Promise<Post[]> {
     return [];
   }
 
+  const res = await safeFetch(`${API_URL}/posts?_embed&per_page=100`);
+  if (!res) {
+    return [];
+  }
+
   try {
-    const res = await fetch(`${API_URL}/posts?_embed&per_page=100`, {
-      signal: AbortSignal.timeout(8000),
-      next: { revalidate: 5 },
-      headers: {
-        "User-Agent": "BlogItems-NextJS-Client/1.0",
-        "Accept": "application/json",
-      },
-    });
-
-    if (!res.ok) {
-      return [];
-    }
-
     const posts = await res.json();
     return Array.isArray(posts) ? posts : [];
   } catch {
@@ -101,20 +103,12 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
     return null;
   }
 
+  const res = await safeFetch(`${API_URL}/posts?slug=${slug}&_embed`);
+  if (!res) {
+    return null;
+  }
+
   try {
-    const res = await fetch(`${API_URL}/posts?slug=${slug}&_embed`, {
-      signal: AbortSignal.timeout(8000),
-      next: { revalidate: 5 },
-      headers: {
-        "User-Agent": "BlogItems-NextJS-Client/1.0",
-        "Accept": "application/json",
-      },
-    });
-
-    if (!res.ok) {
-      return null;
-    }
-
     const posts: Post[] = await res.json();
     return Array.isArray(posts) && posts.length > 0 ? posts[0] : null;
   } catch {
@@ -127,20 +121,12 @@ export async function getPageBySlug(slug: string): Promise<Post | null> {
     return null;
   }
 
+  const res = await safeFetch(`${API_URL}/pages?slug=${slug}&_embed`);
+  if (!res) {
+    return null;
+  }
+
   try {
-    const res = await fetch(`${API_URL}/pages?slug=${slug}&_embed`, {
-      signal: AbortSignal.timeout(8000),
-      next: { revalidate: 5 },
-      headers: {
-        "User-Agent": "BlogItems-NextJS-Client/1.0",
-        "Accept": "application/json",
-      },
-    });
-
-    if (!res.ok) {
-      return null;
-    }
-
     const pages: Post[] = await res.json();
     return Array.isArray(pages) && pages.length > 0 ? pages[0] : null;
   } catch {
@@ -153,20 +139,12 @@ export async function getAllPages(): Promise<Post[]> {
     return [];
   }
 
+  const res = await safeFetch(`${API_URL}/pages?_embed&per_page=50`);
+  if (!res) {
+    return [];
+  }
+
   try {
-    const res = await fetch(`${API_URL}/pages?_embed&per_page=50`, {
-      signal: AbortSignal.timeout(8000),
-      next: { revalidate: 5 },
-      headers: {
-        "User-Agent": "BlogItems-NextJS-Client/1.0",
-        "Accept": "application/json",
-      },
-    });
-
-    if (!res.ok) {
-      return [];
-    }
-
     const pages = await res.json();
     return Array.isArray(pages) ? pages : [];
   } catch {

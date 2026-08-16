@@ -7,7 +7,7 @@ import FaqSection from "@/components/FaqSection";
 import CtaSection from "@/components/CtaSection";
 import type { Metadata } from "next";
 
-export const revalidate = 5;
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "The BlogItems Journal | Modern Web Engineering & Headless CMS Insights",
