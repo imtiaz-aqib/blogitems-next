@@ -29,15 +29,15 @@ function shouldFetch(): boolean {
   return true;
 }
 
-// Safe fetch wrapper with 15-second timeout for reliable Vercel serverless execution
+// Safe fetch wrapper with 15-second timeout and zero cache for 100% fresh live posts
 async function safeFetch(url: string, options: RequestInit = {}): Promise<Response | null> {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000);
     const res = await fetch(url, {
       ...options,
+      cache: "no-store",
       signal: controller.signal,
-      next: { revalidate: 60, tags: ["posts"] },
       headers: {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
         "Accept": "application/json",
