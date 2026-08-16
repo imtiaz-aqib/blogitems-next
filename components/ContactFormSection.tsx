@@ -7,9 +7,9 @@ export default function ContactFormSection() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    website: "",
-    projectType: "headless-cms",
-    budget: "$10k - $25k",
+    phone: "",
+    company: "",
+    role: "",
     message: "",
   });
 
@@ -19,141 +19,103 @@ export default function ContactFormSection() {
   };
 
   return (
-    <section className="max-w-[1200px] mx-auto px-6 py-12 md:py-16">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-        {/* Left Column: Contact Details & Info Cards */}
-        <div className="lg:col-span-5 flex flex-col gap-8">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-[#000000] mb-4">
-              Get in Touch
+    <section className="max-w-[1140px] mx-auto px-6 py-6 md:py-10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        {/* Left Column: MetalBear Copy & Bullet List */}
+        <div className="lg:col-span-5 flex flex-col items-start justify-center">
+          {/* Yellow Badge Pill */}
+          <span className="inline-block bg-[#ffcb7d] text-[#000000] border-2 border-[#000000] font-extrabold text-[11px] uppercase tracking-wider px-3.5 py-1 rounded-full mb-4 shadow-[2px_2px_#000000]">
+            CONTACT
+          </span>
+
+          {/* Main Headline */}
+          <h1 className="font-[var(--font-display)] text-4xl sm:text-5xl lg:text-6xl font-black text-[#000000] tracking-tight mb-4 leading-none">
+            Let&apos;s chat!
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-sm md:text-base text-[#444455] leading-relaxed mb-6 font-medium">
+            Whether you&apos;re evaluating BlogItems for your team, need technical help, or just want to learn more — we&apos;re here for you.
+          </p>
+
+          {/* Reach out bullet list */}
+          <div className="mb-6">
+            <h2 className="text-sm font-bold text-[#000000] mb-3">
+              Reach out to us about:
             </h2>
-            <p className="text-sm md:text-base text-[#333344] leading-relaxed mb-6">
-              Whether you&apos;re migrating from traditional WordPress to a decoupled Headless Next.js stack, or scaling an enterprise platform, we&apos;re here to help.
-            </p>
+            <ul className="flex flex-col gap-2 text-xs md:text-sm text-[#333344] font-medium">
+              <li className="flex items-center gap-2">
+                <span className="text-[#756df3] font-bold text-base">&rarr;</span>
+                <span>Getting a live demo of BlogItems.</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-[#756df3] font-bold text-base">&rarr;</span>
+                <span>Questions about pricing or plans.</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-[#756df3] font-bold text-base">&rarr;</span>
+                <span>Technical questions or integration help.</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="text-[#756df3] font-bold text-base">&rarr;</span>
+                <span>Anything else on your mind.</span>
+              </li>
+            </ul>
           </div>
 
-          {/* Info Cards */}
-          <div className="flex flex-col gap-4">
-            {/* Direct Email Card */}
-            <div className="bg-white border border-[#000000] rounded-xl p-5 ui-card-shadow flex items-start gap-4">
-              <div className="w-10 h-10 rounded-lg bg-[#756df3] text-white flex items-center justify-center flex-shrink-0 border border-[#232141]">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="4" width="20" height="16" rx="2" />
-                  <path d="M22 6L12 13L2 6" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#888899] mb-1">
-                  Email Us
-                </h3>
-                <a href="mailto:hi@blogitems.com" className="text-sm font-bold text-[#232141] hover:text-[#756df3] transition">
-                  hi@blogitems.com
-                </a>
-                <p className="text-xs text-[#888899] mt-0.5">Response within 24 hours</p>
-              </div>
-            </div>
-
-            {/* Office Location Card */}
-            <div className="bg-white border border-[#000000] rounded-xl p-5 ui-card-shadow flex items-start gap-4">
-              <div className="w-10 h-10 rounded-lg bg-[#ffcb7d] text-[#232141] flex items-center justify-center flex-shrink-0 border border-[#232141]">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#888899] mb-1">
-                  HQ &amp; Remote Operations
-                </h3>
-                <p className="text-sm font-bold text-[#232141]">
-                  San Francisco, CA &amp; Distributed Worldwide
-                </p>
-                <p className="text-xs text-[#888899] mt-0.5">Serving clients globally</p>
-              </div>
-            </div>
-
-            {/* Consultation Card */}
-            <div className="bg-[#e4e3fd] border border-[#232141] rounded-xl p-5 ui-card-shadow flex items-start gap-4">
-              <div className="w-10 h-10 rounded-lg bg-[#232141] text-white flex items-center justify-center flex-shrink-0">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <polyline points="12 6 12 12 16 14" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#232141] mb-1">
-                  Fast Technical Discovery
-                </h3>
-                <p className="text-xs text-[#333344] leading-relaxed">
-                  Book a 30-minute architectural discovery call with one of our senior Next.js engineers.
-                </p>
-              </div>
-            </div>
-          </div>
+          {/* Async Note */}
+          <p className="text-xs text-[#777788] leading-normal">
+            Prefer async? Chat with us on <a href="mailto:hi@blogitems.com" className="text-[#5f58d6] font-semibold hover:underline">Slack</a>, email <a href="mailto:hi@blogitems.com" className="text-[#5f58d6] font-semibold hover:underline">hi@blogitems.com</a>, or open an issue on <a href="https://github.com/imtiaz-aqib/blogitems-next" target="_blank" rel="noopener noreferrer" className="text-[#5f58d6] font-semibold hover:underline">GitHub</a>.
+          </p>
         </div>
 
-        {/* Right Column: Contact Form */}
-        <div className="lg:col-span-7 bg-white border border-[#000000] rounded-2xl p-6 md:p-10 ui-card-shadow">
+        {/* Right Column: MetalBear Style Form Card */}
+        <div className="lg:col-span-7 bg-white border-2 border-[#000000] rounded-2xl p-6 sm:p-8 shadow-[6px_8px_0px_#232141]">
           {submitted ? (
-            <div className="py-12 text-center flex flex-col items-center justify-center">
-              <div className="w-16 h-16 rounded-2xl bg-[#ffcb7d] border-2 border-[#232141] text-[#232141] flex items-center justify-center mb-6 shadow-[4px_5px_#232141]">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+            <div className="py-10 text-center flex flex-col items-center justify-center">
+              <div className="w-14 h-14 rounded-2xl bg-[#ffcb7d] border-2 border-[#000000] text-[#000000] flex items-center justify-center mb-4 shadow-[3px_4px_#000000]">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
               </div>
-              <h3 className="text-2xl md:text-3xl font-bold text-[#000000] mb-3">
-                Message Sent Successfully!
+              <h3 className="text-2xl font-bold text-[#000000] mb-2">
+                Message Sent!
               </h3>
-              <p className="text-sm text-[#333344] max-w-[420px] mb-8 leading-relaxed">
-                Thank you for reaching out to BlogItems. Our engineering team has received your message and will respond to <strong>{formData.email || "your email"}</strong> within 24 hours.
+              <p className="text-xs sm:text-sm text-[#444455] max-w-[380px] mb-6 leading-relaxed">
+                Thank you! Our engineering team has received your inquiry and will reply to <strong>{formData.email}</strong> shortly.
               </p>
               <button
                 onClick={() => {
                   setSubmitted(false);
-                  setFormData({
-                    name: "",
-                    email: "",
-                    website: "",
-                    projectType: "headless-cms",
-                    budget: "$10k - $25k",
-                    message: "",
-                  });
+                  setFormData({ name: "", email: "", phone: "", company: "", role: "", message: "" });
                 }}
-                className="ui-btn-primary text-xs font-semibold px-5 py-2.5 rounded-xl"
+                className="bg-[#5f58d6] text-white border-2 border-[#000000] font-bold text-xs px-6 py-2.5 rounded-xl shadow-[3px_3px_#000000] hover:bg-[#4a44b8] transition"
               >
                 Send Another Message &rarr;
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-              <div className="border-b border-[#e4e3fd] pb-4">
-                <h3 className="text-xl md:text-2xl font-bold text-[#000000] mb-1">
-                  Start a Conversation
-                </h3>
-                <p className="text-xs text-[#888899]">
-                  Fill out the details below and we&apos;ll get back to you with a tailored technical proposal.
-                </p>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              {/* Name Field */}
+              <div>
+                <label className="block text-xs font-bold text-[#000000] mb-1.5">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Jane Smith"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#d1d1dd] text-xs sm:text-sm text-[#000000] bg-[#ffffff] focus:outline-none focus:border-[#5f58d6] focus:ring-1 focus:ring-[#5f58d6]"
+                />
               </div>
 
-              {/* Name & Email Inputs */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* Work email & Phone */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#232141] mb-2">
-                    Your Full Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Jane Doe"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-[#232141] text-sm text-[#000000] bg-[#fafafd] focus:outline-none focus:ring-2 focus:ring-[#756df3]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#232141] mb-2">
-                    Work Email Address <span className="text-red-500">*</span>
+                  <label className="block text-xs font-bold text-[#000000] mb-1.5">
+                    Work email
                   </label>
                   <input
                     type="email"
@@ -161,81 +123,74 @@ export default function ContactFormSection() {
                     placeholder="jane@company.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-[#232141] text-sm text-[#000000] bg-[#fafafd] focus:outline-none focus:ring-2 focus:ring-[#756df3]"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#d1d1dd] text-xs sm:text-sm text-[#000000] bg-[#ffffff] focus:outline-none focus:border-[#5f58d6] focus:ring-1 focus:ring-[#5f58d6]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-[#666677] mb-1.5">
+                    Phone <span className="font-normal">(optional)</span>
+                  </label>
+                  <input
+                    type="tel"
+                    placeholder="+1 555 0100"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#d1d1dd] text-xs sm:text-sm text-[#000000] bg-[#ffffff] focus:outline-none focus:border-[#5f58d6] focus:ring-1 focus:ring-[#5f58d6]"
                   />
                 </div>
               </div>
 
-              {/* Website / Company */}
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-[#232141] mb-2">
-                  Company Website / Current Domain
-                </label>
-                <input
-                  type="url"
-                  placeholder="https://example.com"
-                  value={formData.website}
-                  onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-[#232141] text-sm text-[#000000] bg-[#fafafd] focus:outline-none focus:ring-2 focus:ring-[#756df3]"
-                />
-              </div>
-
-              {/* Project Type & Budget */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* Company & Role */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#232141] mb-2">
-                    Project Type
+                  <label className="block text-xs font-bold text-[#000000] mb-1.5">
+                    Company
                   </label>
-                  <select
-                    value={formData.projectType}
-                    onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-[#232141] text-sm text-[#000000] bg-[#fafafd] focus:outline-none focus:ring-2 focus:ring-[#756df3]"
-                  >
-                    <option value="headless-cms">Headless WordPress &amp; Next.js</option>
-                    <option value="nextjs-engineering">Next.js Web Engineering</option>
-                    <option value="performance-audit">Core Web Vitals Audit</option>
-                    <option value="custom-solution">Custom Full-Stack Solution</option>
-                  </select>
+                  <input
+                    type="text"
+                    placeholder="Acme Inc."
+                    value={formData.company}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#d1d1dd] text-xs sm:text-sm text-[#000000] bg-[#ffffff] focus:outline-none focus:border-[#5f58d6] focus:ring-1 focus:ring-[#5f58d6]"
+                  />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#232141] mb-2">
-                    Estimated Budget
+                  <label className="block text-xs font-bold text-[#666677] mb-1.5">
+                    Role <span className="font-normal">(optional)</span>
                   </label>
-                  <select
-                    value={formData.budget}
-                    onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-[#232141] text-sm text-[#000000] bg-[#fafafd] focus:outline-none focus:ring-2 focus:ring-[#756df3]"
-                  >
-                    <option value="< $10k">&lt; $10,000</option>
-                    <option value="$10k - $25k">$10,000 - $25,000</option>
-                    <option value="$25k - $50k">$25,000 - $50,000</option>
-                    <option value="$50k+">$50,000+</option>
-                  </select>
+                  <input
+                    type="text"
+                    placeholder="Platform Engineer"
+                    value={formData.role}
+                    onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#d1d1dd] text-xs sm:text-sm text-[#000000] bg-[#ffffff] focus:outline-none focus:border-[#5f58d6] focus:ring-1 focus:ring-[#5f58d6]"
+                  />
                 </div>
               </div>
 
-              {/* Message Input */}
+              {/* How can we help? */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-[#232141] mb-2">
-                  Project Requirements / Details <span className="text-red-500">*</span>
+                <label className="block text-xs font-bold text-[#000000] mb-1.5">
+                  How can we help?
                 </label>
                 <textarea
                   required
-                  rows={4}
-                  placeholder="Tell us about your project goals, timelines, and current tech stack..."
+                  rows={3}
+                  placeholder="I'd like to book a demo, learn about pricing, or.."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-[#232141] text-sm text-[#000000] bg-[#fafafd] focus:outline-none focus:ring-2 focus:ring-[#756df3]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#d1d1dd] text-xs sm:text-sm text-[#000000] bg-[#ffffff] focus:outline-none focus:border-[#5f58d6] focus:ring-1 focus:ring-[#5f58d6]"
                 />
               </div>
 
-              {/* Submit Button */}
+              {/* Get in touch Submit Button */}
               <button
                 type="submit"
-                className="ui-btn-primary w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 mt-2"
+                className="w-full bg-[#5f58d6] text-white border-2 border-[#000000] py-3 rounded-xl font-bold text-xs sm:text-sm shadow-[3px_4px_0px_#000000] hover:bg-[#4a44b8] transition-all mt-1"
               >
-                Send Message &amp; Request Proposal &rarr;
+                Get in touch
               </button>
             </form>
           )}
