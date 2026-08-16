@@ -49,7 +49,7 @@ export default function FaqSection() {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-[#fafafd] border-t border-[#e4e3fd]">
+    <section className="py-16 md:py-24 bg-[#fffcf0] border-t border-[#f2edd9]">
       <div className="max-w-[960px] mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-12">
