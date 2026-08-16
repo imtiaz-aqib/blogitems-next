@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,13 +25,13 @@ export async function POST(request: NextRequest) {
     }
 
     try {
+      revalidatePath("/", "layout");
       revalidatePath("/journal", "page");
-      revalidatePath("/", "page");
       if (slug) {
         revalidatePath(`/posts/${slug}`, "page");
       }
     } catch (e) {
-      console.error("revalidatePath error:", e);
+      console.error("revalidate error:", e);
     }
 
     return NextResponse.json({

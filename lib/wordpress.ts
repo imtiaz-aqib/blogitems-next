@@ -37,7 +37,7 @@ async function safeFetch(url: string, options: RequestInit = {}): Promise<Respon
     const res = await fetch(url, {
       ...options,
       signal: controller.signal,
-      next: { revalidate: 60 },
+      next: { revalidate: 60, tags: ["posts"] },
       headers: {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
         "Accept": "application/json",
