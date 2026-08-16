@@ -181,8 +181,10 @@ export default async function JournalPage() {
     posts = FALLBACK_POSTS;
   }
 
-  if (!posts || posts.length === 0) {
-    posts = FALLBACK_POSTS;
+  if (posts.length < 6) {
+    const existingSlugs = new Set(posts.map((p) => p.slug));
+    const extraFallbacks = FALLBACK_POSTS.filter((p) => !existingSlugs.has(p.slug));
+    posts = [...posts, ...extraFallbacks];
   }
 
   const featuredPost = posts[0];
