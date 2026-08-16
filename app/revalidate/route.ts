@@ -24,11 +24,14 @@ export async function POST(request: NextRequest) {
       // Body empty or non-JSON
     }
 
-    // Instantly purge Next.js CDN static HTML cache
-    revalidatePath("/journal");
-    revalidatePath("/");
-    if (slug) {
-      revalidatePath(`/posts/${slug}`);
+    try {
+      revalidatePath("/journal", "page");
+      revalidatePath("/", "page");
+      if (slug) {
+        revalidatePath(`/posts/${slug}`, "page");
+      }
+    } catch (e) {
+      console.error("revalidatePath error:", e);
     }
 
     return NextResponse.json({
