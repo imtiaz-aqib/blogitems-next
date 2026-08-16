@@ -5,6 +5,14 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "http",
+        hostname: "aqib-xyz.stackstaging.com",
+      },
+      {
+        protocol: "https",
+        hostname: "aqib-xyz.stackstaging.com",
+      },
+      {
+        protocol: "http",
         hostname: "blogitems.local",
       },
       {
