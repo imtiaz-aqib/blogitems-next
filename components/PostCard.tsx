@@ -36,12 +36,12 @@ export default function PostCard({ post }: { post: Post }) {
           <div>
             <h3
               className="text-lg font-bold text-[#000000] group-hover:text-[#756df3] transition-colors leading-snug mb-2 line-clamp-2"
-              dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.title.rendered) }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(post?.title?.rendered || "Article Title") }}
             />
 
             <div
               className="text-xs sm:text-sm text-[#333344] line-clamp-3 mb-4 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.excerpt.rendered) }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(post?.excerpt?.rendered || "") }}
             />
           </div>
 

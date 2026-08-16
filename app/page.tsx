@@ -373,14 +373,14 @@ export default async function HomePage() {
                     Journal Feature
                   </span>
                   <h3 className="font-[var(--font-display)] text-2xl font-bold text-white mb-3 group-hover:text-[#ffcb7d] transition-colors">
-                    {posts[0].title.rendered}
+                    {posts[0]?.title?.rendered || "Featured Post"}
                   </h3>
                   <p className="text-sm text-white/80 leading-relaxed mb-6">
-                    {posts[0].excerpt.rendered.replace(/<[^>]+>/g, "").slice(0, 140)}...
+                    {(posts[0]?.excerpt?.rendered || "").replace(/<[^>]+>/g, "").slice(0, 140)}...
                   </p>
                 </div>
                 <div className="flex items-center justify-between text-xs text-white/60 pt-4 border-t border-white/10">
-                  <span>{formatPostDate(posts[0].date?.rendered)} &middot; {calculateReadingTime(posts[0].content?.rendered)}</span>
+                  <span>{formatPostDate(posts[0]?.date?.rendered)} &middot; {calculateReadingTime(posts[0]?.content?.rendered)}</span>
                   <span className="font-bold text-[#ffcb7d] group-hover:translate-x-1 transition-transform">Read article &rarr;</span>
                 </div>
               </Link>
@@ -397,7 +397,7 @@ export default async function HomePage() {
                   Guide
                 </span>
                 <h3 className="font-[var(--font-display)] text-xl font-bold text-[#232141] mb-2 group-hover:text-[#756df3] transition-colors">
-                  {posts[1]?.title.rendered || "Build vs Buy Your Headless CMS Infrastructure"}
+                  {posts[1]?.title?.rendered || "Build vs Buy Your Headless CMS Infrastructure"}
                 </h3>
                 <p className="text-xs text-[#333344] leading-relaxed mb-4">
                   Evaluating custom API gateways versus native WordPress REST API integration.
@@ -417,10 +417,10 @@ export default async function HomePage() {
                     Performance
                   </span>
                   <h3 className="font-[var(--font-display)] text-xl font-bold text-[#232141] mb-3 group-hover:underline">
-                    {posts[2].title.rendered}
+                    {posts[2]?.title?.rendered || "Performance Guide"}
                   </h3>
                   <p className="text-xs text-[#232141]/80 leading-relaxed mb-4">
-                    {posts[2].excerpt.rendered.replace(/<[^>]+>/g, "").slice(0, 120)}...
+                    {(posts[2]?.excerpt?.rendered || "").replace(/<[^>]+>/g, "").slice(0, 120)}...
                   </p>
                 </div>
                 <span className="text-xs font-bold text-[#232141]">Read article &rarr;</span>

@@ -40,12 +40,12 @@ export default function FeaturedPostCard({ post }: { post: Post }) {
 
               <h2
                 className="text-2xl md:text-3xl font-bold text-[#000000] group-hover:text-[#756df3] transition-colors leading-tight mb-4"
-                dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.title.rendered) }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(post?.title?.rendered || "Article Title") }}
               />
 
               <div
                 className="text-[#333344] text-sm md:text-base line-clamp-3 mb-6 leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.excerpt.rendered) }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(post?.excerpt?.rendered || "") }}
               />
             </div>
 
