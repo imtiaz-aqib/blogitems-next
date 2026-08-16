@@ -1,13 +1,10 @@
+import { Suspense } from "react";
 import { getAllPosts, Post } from "@/lib/wordpress";
 import BlogHeader from "@/components/BlogHeader";
-import FeaturedPostCard from "@/components/FeaturedPostCard";
-import PostCard from "@/components/PostCard";
-import Pagination from "@/components/Pagination";
+import JournalContent from "@/components/JournalContent";
 import FaqSection from "@/components/FaqSection";
 import CtaSection from "@/components/CtaSection";
 import type { Metadata } from "next";
-
-export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "The BlogItems Journal | Modern Web Engineering & Headless CMS Insights",
@@ -60,25 +57,7 @@ const FALLBACK_POSTS: Post[] = [
   },
 ];
 
-export default async function JournalPage(props?: {
-  searchParams?: Promise<{ page?: string }>;
-}) {
-  let currentPage = 1;
-  try {
-    if (props && props.searchParams) {
-      const sp = await props.searchParams;
-      if (sp && sp.page) {
-        const parsed = parseInt(sp.page, 10);
-        if (!isNaN(parsed) && parsed > 0) {
-          currentPage = parsed;
-        }
-      }
-    }
-  } catch {
-    currentPage = 1;
-  }
-
-  const pageSize = 6;
+export default async function JournalPage() {
   let posts: Post[] = [];
 
   try {
@@ -91,50 +70,15 @@ export default async function JournalPage(props?: {
     posts = FALLBACK_POSTS;
   }
 
-  const totalPosts = posts.length;
-
-  let featuredPost: Post | null = null;
-  let gridPosts: Post[] = [];
-
-  if (currentPage === 1) {
-    featuredPost = posts[0] || null;
-    gridPosts = posts.slice(1, 1 + pageSize);
-  } else {
-    featuredPost = null;
-    const startIndex = (currentPage - 1) * pageSize;
-    gridPosts = posts.slice(startIndex, startIndex + pageSize);
-    if (gridPosts.length === 0 && posts.length > 0) {
-      gridPosts = posts.slice(0, pageSize);
-    }
-  }
-
   return (
     <div>
       {/* Blog Journal Hero Header */}
       <BlogHeader />
 
-      {/* Main Blog Content Feed */}
-      <div className="max-w-[1200px] mx-auto px-6 pt-12 pb-16">
-        {/* Featured Article Card (Page 1 Only) */}
-        {featuredPost && <FeaturedPostCard post={featuredPost} />}
-
-        {/* 3-Column Blog Grid */}
-        {gridPosts.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {gridPosts.map((post, idx) => (
-              <PostCard key={post?.id || post?.slug || idx} post={post} />
-            ))}
-          </div>
-        )}
-
-        {/* Dynamic Link-Based Pagination Bar */}
-        <Pagination
-          currentPage={currentPage}
-          totalPosts={totalPosts}
-          pageSize={pageSize}
-          baseUrl="/journal"
-        />
-      </div>
+      {/* Main Blog Content Feed with Suspense-wrapped searchParams pagination */}
+      <Suspense fallback={<div className="max-w-[1200px] mx-auto px-6 py-20 text-center text-[#888899]">Loading journal posts...</div>}>
+        <JournalContent posts={posts} />
+      </Suspense>
 
       {/* FAQ Accordion Section */}
       <FaqSection />
