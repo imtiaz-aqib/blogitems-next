@@ -77,7 +77,7 @@ export default async function JournalPage() {
 
       {/* Main Blog Content Feed with Suspense-wrapped real-time JournalContent */}
       <Suspense fallback={<div className="max-w-[1200px] mx-auto px-6 py-20 text-center text-[#888899]">Loading journal posts...</div>}>
-        <JournalContent initialPosts={posts} />
+        <JournalContent posts={posts} />
       </Suspense>
 
       {/* FAQ Accordion Section */}
