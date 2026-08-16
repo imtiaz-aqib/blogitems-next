@@ -15,6 +15,12 @@ export interface Post {
   };
 }
 
+export interface PaginatedPostsResult {
+  posts: Post[];
+  totalPosts: number;
+  totalPages: number;
+}
+
 // Helper to determine if we should attempt fetch or fail fast
 function shouldFetch(): boolean {
   if (!API_URL) return false;
@@ -25,17 +31,51 @@ function shouldFetch(): boolean {
   return true;
 }
 
+export async function getPaginatedPosts(
+  page: number = 1,
+  perPage: number = 6
+): Promise<PaginatedPostsResult> {
+  if (!shouldFetch()) {
+    return { posts: [], totalPosts: 0, totalPages: 0 };
+  }
+
+  try {
+    const res = await fetch(
+      `${API_URL}/posts?_embed&page=${page}&per_page=${perPage}`,
+      {
+        signal: AbortSignal.timeout(10000),
+        cache: "no-store",
+      }
+    );
+
+    if (!res.ok) {
+      return { posts: [], totalPosts: 0, totalPages: 0 };
+    }
+
+    const totalPosts = parseInt(res.headers.get("x-wp-total") || "0", 10);
+    const totalPages = parseInt(res.headers.get("x-wp-totalpages") || "0", 10);
+    const posts: Post[] = await res.json();
+
+    return {
+      posts,
+      totalPosts: totalPosts || posts.length,
+      totalPages: totalPages || (posts.length > 0 ? 1 : 0),
+    };
+  } catch (e) {
+    console.error("getPaginatedPosts error:", e);
+    return { posts: [], totalPosts: 0, totalPages: 0 };
+  }
+}
+
 export async function getAllPosts(): Promise<Post[]> {
   if (!shouldFetch()) {
     return [];
   }
 
   try {
-    const res = await fetch(`${API_URL}/posts?_embed&per_page=12`, {
+    const res = await fetch(`${API_URL}/posts?_embed&per_page=100`, {
       signal: AbortSignal.timeout(10000),
-      next: {
-        revalidate: 10,
-      },
+      cache: "no-store",
     });
 
     if (!res.ok) {
@@ -56,9 +96,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
   try {
     const res = await fetch(`${API_URL}/posts?slug=${slug}&_embed`, {
       signal: AbortSignal.timeout(10000),
-      next: {
-        revalidate: 10,
-      },
+      cache: "no-store",
     });
 
     if (!res.ok) {
@@ -80,9 +118,7 @@ export async function getPageBySlug(slug: string): Promise<Post | null> {
   try {
     const res = await fetch(`${API_URL}/pages?slug=${slug}&_embed`, {
       signal: AbortSignal.timeout(10000),
-      next: {
-        revalidate: 10,
-      },
+      cache: "no-store",
     });
 
     if (!res.ok) {
@@ -104,9 +140,7 @@ export async function getAllPages(): Promise<Post[]> {
   try {
     const res = await fetch(`${API_URL}/pages?_embed&per_page=50`, {
       signal: AbortSignal.timeout(10000),
-      next: {
-        revalidate: 10,
-      },
+      cache: "no-store",
     });
 
     if (!res.ok) {
