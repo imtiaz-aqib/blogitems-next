@@ -32,9 +32,9 @@ export async function getAllPosts(): Promise<Post[]> {
 
   try {
     const res = await fetch(`${API_URL}/posts?_embed&per_page=12`, {
-      signal: AbortSignal.timeout(3000),
+      signal: AbortSignal.timeout(10000),
       next: {
-        revalidate: 60,
+        revalidate: 10,
       },
     });
 
@@ -55,9 +55,9 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
 
   try {
     const res = await fetch(`${API_URL}/posts?slug=${slug}&_embed`, {
-      signal: AbortSignal.timeout(3000),
+      signal: AbortSignal.timeout(10000),
       next: {
-        revalidate: 60,
+        revalidate: 10,
       },
     });
 
@@ -79,9 +79,9 @@ export async function getPageBySlug(slug: string): Promise<Post | null> {
 
   try {
     const res = await fetch(`${API_URL}/pages?slug=${slug}&_embed`, {
-      signal: AbortSignal.timeout(3000),
+      signal: AbortSignal.timeout(10000),
       next: {
-        revalidate: 60,
+        revalidate: 10,
       },
     });
 
@@ -103,9 +103,9 @@ export async function getAllPages(): Promise<Post[]> {
 
   try {
     const res = await fetch(`${API_URL}/pages?_embed&per_page=50`, {
-      signal: AbortSignal.timeout(3000),
+      signal: AbortSignal.timeout(10000),
       next: {
-        revalidate: 60,
+        revalidate: 10,
       },
     });
 

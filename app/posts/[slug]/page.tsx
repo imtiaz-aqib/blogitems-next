@@ -5,6 +5,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import CtaSection from "@/components/CtaSection";
 
+export const revalidate = 10;
+export const dynamicParams = true;
+
 const FALLBACK_POSTS_MAP: Record<string, Post> = {
   "optimize-nextjs-headless-wordpress": {
     id: 201,
