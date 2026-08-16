@@ -78,6 +78,9 @@ export default function Navbar() {
           <Link href="/journal" className={`px-3 py-1.5 rounded-lg transition ${pathname === "/journal" ? "text-[#756df3] font-semibold bg-[#e4e3fd]/60" : "hover:text-[#756df3] hover:bg-[#e4e3fd]"}`}>
             Journal
           </Link>
+          <Link href="/shop" className={`px-3 py-1.5 rounded-lg transition ${pathname === "/shop" ? "text-[#756df3] font-semibold bg-[#e4e3fd]/60" : "hover:text-[#756df3] hover:bg-[#e4e3fd]"}`}>
+            Shop 🛒
+          </Link>
           <Link href="/contact" className={`px-3 py-1.5 rounded-lg transition ${pathname === "/contact" ? "text-[#756df3] font-semibold bg-[#e4e3fd]/60" : "hover:text-[#756df3] hover:bg-[#e4e3fd]"}`}>
             Contact
           </Link>
