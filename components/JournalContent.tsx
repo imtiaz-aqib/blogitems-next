@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Post } from "@/lib/wordpress";
 import FeaturedPostCard from "@/components/FeaturedPostCard";
@@ -7,14 +8,48 @@ import PostCard from "@/components/PostCard";
 import Pagination from "@/components/Pagination";
 
 interface JournalContentProps {
-  posts: Post[];
+  initialPosts: Post[];
 }
 
-export default function JournalContent({ posts }: JournalContentProps) {
+export default function JournalContent({ initialPosts }: JournalContentProps) {
+  const [posts, setPosts] = useState<Post[]>(initialPosts || []);
+  const [loading, setLoading] = useState(false);
+
   const searchParams = useSearchParams();
   const pageParam = searchParams.get("page");
   const currentPage = Math.max(1, parseInt(pageParam || "1", 10));
   const pageSize = 6;
+
+  // Real-time client-side sync: Fetch fresh posts directly from WordPress on mount
+  useEffect(() => {
+    let isMounted = true;
+    async function syncPosts() {
+      try {
+        setLoading(true);
+        const res = await fetch("https://aqib-xyz.stackstaging.com/wp-json/wp/v2/posts?_embed&per_page=100", {
+          cache: "no-store",
+          headers: {
+            "Accept": "application/json"
+          }
+        });
+        if (res.ok) {
+          const freshPosts = await res.json();
+          if (isMounted && Array.isArray(freshPosts) && freshPosts.length > 0) {
+            setPosts(freshPosts);
+          }
+        }
+      } catch (e) {
+        console.error("Client post sync error:", e);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    }
+
+    syncPosts();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const totalPosts = posts.length;
   let featuredPost: Post | null = null;
