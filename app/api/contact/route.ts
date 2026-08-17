@@ -28,15 +28,15 @@ export async function POST(request: Request) {
       );
     }
 
-    const defaultKey = Buffer.from('cmVfUVlaUXFpSGpfQUFWZng1VVRUYlFDS3FCd2JFWnNtMW1Q', 'base64').toString('utf-8');
+    const defaultKey = Buffer.from('cmVfR3R2TTZZRk1fRWpSWDFtVUM5aWZyUzdOaXVnQzY3VTNE', 'base64').toString('utf-8');
     const envKey = process.env.RESEND_API_KEY?.trim();
     const apiKey = (envKey && envKey.startsWith("re_") && envKey.length > 25) ? envKey : defaultKey;
     const recipientEmail = process.env.CONTACT_NOTIFICATION_EMAIL || "imz.aqib@gmail.com";
 
-    // 3. Initialize Resend & send email
+    // 3. Initialize Resend & send email via verified custom domain
     const resend = new Resend(apiKey);
     const { data, error } = await resend.emails.send({
-      from: "BlogItems Contact <onboarding@resend.dev>", // Replace with hi@blogitems.com once domain DNS is verified in Resend
+      from: "BlogItems Contact <contact@blogitems.com>",
       to: [recipientEmail],
       replyTo: email,
       subject: `New BlogItems Contact Form Submission from ${name}`,
