@@ -30,10 +30,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       style={{ colorScheme: "light" }}
       className={`${unbounded.variable} ${poppins.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#fafafd] text-[#000000]">
+      <body suppressHydrationWarning className="min-h-full flex flex-col bg-[#fafafd] text-[#000000]">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

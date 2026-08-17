@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 interface FaqItem {
@@ -43,14 +43,18 @@ const FAQ_ITEMS: FaqItem[] = [
 ];
 
 export default function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    setOpenIndex(0);
+  }, []);
 
   const toggleFaq = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
-    <section className="py-16 md:py-24 bg-[#fffcf0] border-t border-[#f2edd9]">
+    <section className="py-16 md:py-24 bg-[#fffcf0] border-t border-[#f2edd9]" suppressHydrationWarning>
       <div className="max-w-[960px] mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-12">
