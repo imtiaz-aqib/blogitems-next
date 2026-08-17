@@ -29,22 +29,7 @@ export async function POST(request: Request) {
     }
 
     const apiKey = process.env.RESEND_API_KEY;
-    const recipientEmail = process.env.CONTACT_NOTIFICATION_EMAIL || "hi@blogitems.com";
-
-    // 2. Fallback check if API Key is not set yet
-    if (!apiKey || apiKey.trim() === "" || apiKey === "re_your_actual_resend_api_key_here") {
-      console.warn("Contact API triggered, but RESEND_API_KEY is not configured in .env.local yet.");
-      
-      // In development mode without an API key, return a helpful notice
-      return NextResponse.json(
-        {
-          success: true,
-          devNotice: true,
-          message: "Form received! Please set RESEND_API_KEY in .env.local to send live emails.",
-        },
-        { status: 200 }
-      );
-    }
+    const recipientEmail = process.env.CONTACT_NOTIFICATION_EMAIL || "imz.aqib@gmail.com";
 
     // 3. Initialize Resend & send email
     const resend = new Resend(apiKey);

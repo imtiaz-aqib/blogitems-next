@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 interface FaqItem {
   question: string;
@@ -107,12 +108,12 @@ export default function FaqSection() {
             <h4 className="font-bold text-base text-[#232141]">Have a custom question not answered here?</h4>
             <p className="text-xs text-[#333344]">Our engineering team is ready to review your project requirements.</p>
           </div>
-          <a
+          <Link
             href="/contact"
             className="ui-btn-primary text-xs font-bold px-5 py-2.5 rounded-xl whitespace-nowrap"
           >
             Ask a Question &rarr;
-          </a>
+          </Link>
         </div>
       </div>
     </section>

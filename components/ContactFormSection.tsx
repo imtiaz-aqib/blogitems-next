@@ -116,9 +116,9 @@ export default function ContactFormSection() {
                 Thank you! Our engineering team has received your inquiry and will reply to <strong>{formData.email}</strong> shortly.
               </p>
               {devNotice && (
-                <div className="mb-6 p-3 bg-[#fff9db] border border-[#f0b429] rounded-xl text-xs text-[#73510d] font-medium max-w-[380px]">
-                  💡 <strong>Dev Mode:</strong> {devNotice}
-                </div>
+                <p className="text-xs text-amber-700 bg-amber-50 p-2.5 rounded-lg border border-amber-200 mb-4 max-w-[380px]">
+                  {devNotice}
+                </p>
               )}
               <button
                 onClick={() => {

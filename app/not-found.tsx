@@ -56,11 +56,11 @@ export default function NotFound() {
 
             <h1 className="font-[var(--font-display)] text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1] mb-6">
               Lost in space? <br />
-              <span className="text-[#ffcb7d]">This route doesn't exist.</span>
+              <span className="text-[#ffcb7d]">This route doesn&apos;t exist.</span>
             </h1>
 
             <p className="text-base sm:text-lg text-white/90 leading-relaxed mb-8 max-w-[560px]">
-              The page you are looking for might have been removed, had its name changed, or is temporarily unavailable. Let's get you back on track!
+              The page you are looking for might have been removed, had its name changed, or is temporarily unavailable. Let&apos;s get you back on track!
             </p>
 
             <div className="flex flex-wrap items-center gap-4">

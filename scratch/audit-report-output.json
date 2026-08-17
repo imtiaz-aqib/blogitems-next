@@ -1,0 +1,397 @@
+{
+  "systemHealth": {
+    "wpError": "fetch failed",
+    "contactFormError": "fetch failed"
+  },
+  "security": {
+    "codeAudit": {
+      "lib/wordpress.ts": {
+        "exists": true,
+        "hasDOMPurify": true,
+        "hasEscapeHtml": false,
+        "hasSecretValidation": false
+      },
+      "app/posts/[slug]/page.tsx": {
+        "exists": true,
+        "hasDOMPurify": true,
+        "hasEscapeHtml": false,
+        "hasSecretValidation": false
+      },
+      "app/[slug]/page.tsx": {
+        "exists": true,
+        "hasDOMPurify": true,
+        "hasEscapeHtml": false,
+        "hasSecretValidation": false
+      },
+      "app/api/contact/route.ts": {
+        "exists": true,
+        "hasDOMPurify": false,
+        "hasEscapeHtml": true,
+        "hasSecretValidation": false
+      },
+      "app/api/revalidate/route.ts": {
+        "exists": true,
+        "hasDOMPurify": false,
+        "hasEscapeHtml": false,
+        "hasSecretValidation": true
+      },
+      "app/revalidate/route.ts": {
+        "exists": true,
+        "hasDOMPurify": false,
+        "hasEscapeHtml": false,
+        "hasSecretValidation": true
+      },
+      "next.config.ts": {
+        "exists": true,
+        "hasDOMPurify": false,
+        "hasEscapeHtml": false,
+        "hasSecretValidation": false
+      }
+    }
+  },
+  "contentSync": {
+    "totalPublishedPosts": 15,
+    "headerTotal": "15",
+    "headerPages": "1",
+    "postsList": [
+      {
+        "id": 124,
+        "slug": "office-hour",
+        "title": "Office Hour",
+        "hasFeaturedMedia": false,
+        "mediaUrl": null,
+        "author": "imtiaz",
+        "date": "2026-08-17T07:58:04"
+      },
+      {
+        "id": 107,
+        "slug": "5-talks-at-kubecon-japan-im-looking-forward-to",
+        "title": "5 Talks at KubeCon Japan I&#8217;m Looking Forward To",
+        "hasFeaturedMedia": false,
+        "mediaUrl": null,
+        "author": "imtiaz",
+        "date": "2026-08-16T18:35:32"
+      },
+      {
+        "id": 106,
+        "slug": "enterprise-headless-wordpress-setup-completed",
+        "title": "Enterprise Headless WordPress Setup Completed",
+        "hasFeaturedMedia": false,
+        "mediaUrl": null,
+        "author": "imtiaz",
+        "date": "2026-08-16T18:32:32"
+      },
+      {
+        "id": 104,
+        "slug": "are-your-beliefs-limiting-what-is-possible",
+        "title": "Are your beliefs limiting what is possible?",
+        "hasFeaturedMedia": false,
+        "mediaUrl": null,
+        "author": "imtiaz",
+        "date": "2026-08-16T18:19:25"
+      },
+      {
+        "id": 100,
+        "slug": "mastering-headless-wordpress-caching-and-revalidation-strategies-for-nextjs",
+        "title": "Mastering Headless WordPress Caching &#038; Revalidation Strategies for Next.js",
+        "hasFeaturedMedia": false,
+        "mediaUrl": null,
+        "author": "imtiaz",
+        "date": "2026-08-16T18:14:19"
+      },
+      {
+        "id": 79,
+        "slug": "the-ultimate-checklist-for-migrating-to-headless-wordpress",
+        "title": "The Ultimate Checklist for Migrating to Headless WordPress",
+        "hasFeaturedMedia": true,
+        "mediaUrl": "https://aqib-xyz.stackstaging.com/wp-content/uploads/2026/08/migration-checklist.jpg",
+        "author": "imtiaz",
+        "date": "2026-08-16T17:44:07"
+      },
+      {
+        "id": 78,
+        "slug": "5-common-headless-wordpress-mistakes-and-how-to-avoid-them",
+        "title": "5 Common Headless WordPress Mistakes (And How to Avoid Them)",
+        "hasFeaturedMedia": true,
+        "mediaUrl": "https://aqib-xyz.stackstaging.com/wp-content/uploads/2026/08/headless-mistakes.jpg",
+        "author": "imtiaz",
+        "date": "2026-08-16T17:44:05"
+      },
+      {
+        "id": 77,
+        "slug": "how-incremental-static-regeneration-isr-works-in-plain-english",
+        "title": "How Incremental Static Regeneration (ISR) Works in Plain English",
+        "hasFeaturedMedia": true,
+        "mediaUrl": "https://aqib-xyz.stackstaging.com/wp-content/uploads/2026/08/nextjs-isr-guide.jpg",
+        "author": "imtiaz",
+        "date": "2026-08-16T17:44:04"
+      },
+      {
+        "id": 76,
+        "slug": "why-decoupled-headless-wordpress-is-practically-hack-proof",
+        "title": "Why Decoupled Headless WordPress is Practically Hack-Proof",
+        "hasFeaturedMedia": true,
+        "mediaUrl": "https://aqib-xyz.stackstaging.com/wp-content/uploads/2026/08/hack-proof-security.jpg",
+        "author": "imtiaz",
+        "date": "2026-08-16T17:44:02"
+      },
+      {
+        "id": 75,
+        "slug": "step-by-step-how-content-editors-work-in-headless-wordpress",
+        "title": "Step-by-Step: How Content Editors Work in Headless WordPress",
+        "hasFeaturedMedia": true,
+        "mediaUrl": "https://aqib-xyz.stackstaging.com/wp-content/uploads/2026/08/content-editors-workflow.jpg",
+        "author": "imtiaz",
+        "date": "2026-08-16T17:44:01"
+      },
+      {
+        "id": 74,
+        "slug": "is-headless-wordpress-good-for-seo-aeo-geo-guide",
+        "title": "Is Headless WordPress Good for SEO? (AEO &#038; GEO Guide)",
+        "hasFeaturedMedia": true,
+        "mediaUrl": "https://aqib-xyz.stackstaging.com/wp-content/uploads/2026/08/headless-seo-guide.jpg",
+        "author": "imtiaz",
+        "date": "2026-08-16T17:43:59"
+      },
+      {
+        "id": 73,
+        "slug": "how-headless-wordpress-makes-your-website-10x-faster",
+        "title": "How Headless WordPress Makes Your Website 10x Faster",
+        "hasFeaturedMedia": true,
+        "mediaUrl": "https://aqib-xyz.stackstaging.com/wp-content/uploads/2026/08/10x-faster-website.jpg",
+        "author": "imtiaz",
+        "date": "2026-08-16T17:43:57"
+      },
+      {
+        "id": 72,
+        "slug": "traditional-wordpress-vs-headless-wordpress-which-one-should-you-choose",
+        "title": "Traditional WordPress vs Headless WordPress: Which One Should You Choose?",
+        "hasFeaturedMedia": true,
+        "mediaUrl": "https://aqib-xyz.stackstaging.com/wp-content/uploads/2026/08/traditional-vs-headless.jpg",
+        "author": "imtiaz",
+        "date": "2026-08-16T17:43:56"
+      },
+      {
+        "id": 71,
+        "slug": "why-next-js-headless-wordpress-is-the-ultimate-web-combo",
+        "title": "Why Next.js + Headless WordPress is the Ultimate Web Combo",
+        "hasFeaturedMedia": true,
+        "mediaUrl": "https://aqib-xyz.stackstaging.com/wp-content/uploads/2026/08/nextjs-ultimate-combo.jpg",
+        "author": "imtiaz",
+        "date": "2026-08-16T17:43:55"
+      },
+      {
+        "id": 70,
+        "slug": "what-is-headless-wordpress-a-beginners-plain-english-guide",
+        "title": "What is Headless WordPress? A Beginner&#8217;s Plain-English Guide",
+        "hasFeaturedMedia": true,
+        "mediaUrl": "https://aqib-xyz.stackstaging.com/wp-content/uploads/2026/08/headless-wordpress-guide.jpg",
+        "author": "imtiaz",
+        "date": "2026-08-16T17:43:53"
+      }
+    ],
+    "totalPages": 7,
+    "pagesList": [
+      {
+        "id": 116,
+        "slug": "my-account",
+        "title": "My account"
+      },
+      {
+        "id": 115,
+        "slug": "checkout",
+        "title": "Checkout"
+      },
+      {
+        "id": 114,
+        "slug": "cart",
+        "title": "Cart"
+      },
+      {
+        "id": 109,
+        "slug": "shop",
+        "title": "Shop"
+      },
+      {
+        "id": 20,
+        "slug": "services",
+        "title": "Services"
+      },
+      {
+        "id": 17,
+        "slug": "about-us",
+        "title": "About Us"
+      },
+      {
+        "id": 12,
+        "slug": "contact",
+        "title": "Contact"
+      }
+    ],
+    "totalMediaItems": 18
+  },
+  "endpoints": {
+    "Home Page": {
+      "url": "https://www.blogitems.com/",
+      "status": 200,
+      "statusText": "OK",
+      "latencyMs": 10001,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "age": "0",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-disposition": "inline",
+        "content-encoding": "br",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 17 Aug 2026 15:29:41 GMT",
+        "etag": "W/\"4ec924a6d28abcbda48c82e68a840eef\"",
+        "referrer-policy": "origin-when-cross-origin",
+        "server": "Vercel",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "transfer-encoding": "chunked",
+        "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-matched-path": "/",
+        "x-nextjs-prerender": "1",
+        "x-nextjs-stale-time": "300",
+        "x-vercel-cache": "PRERENDER",
+        "x-vercel-id": "bom1::826cr-1786980581075-4ce636cf3105"
+      }
+    },
+    "Journal Page": {
+      "url": "https://www.blogitems.com/journal",
+      "status": 200,
+      "statusText": "OK",
+      "latencyMs": 4067,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "age": "148",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-disposition": "inline",
+        "content-encoding": "br",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 17 Aug 2026 15:29:46 GMT",
+        "etag": "W/\"851bab8ba69513e7b710ab9821d0497a\"",
+        "referrer-policy": "origin-when-cross-origin",
+        "server": "Vercel",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "transfer-encoding": "chunked",
+        "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-matched-path": "/journal",
+        "x-nextjs-prerender": "1",
+        "x-nextjs-stale-time": "300",
+        "x-vercel-cache": "STALE",
+        "x-vercel-id": "bom1::ldfkv-1786980586558-c4a804fdafa1"
+      }
+    },
+    "Contact Page": {
+      "url": "https://www.blogitems.com/contact",
+      "status": 200,
+      "statusText": "OK",
+      "latencyMs": 6741,
+      "headers": {
+        "age": "157",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-encoding": "br",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 17 Aug 2026 15:27:16 GMT",
+        "etag": "W/\"142pb45aherxyk\"",
+        "referrer-policy": "origin-when-cross-origin",
+        "server": "Vercel",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "transfer-encoding": "chunked",
+        "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-matched-path": "/contact",
+        "x-nextjs-prerender": "1",
+        "x-nextjs-stale-time": "300",
+        "x-powered-by": "Next.js",
+        "x-vercel-cache": "STALE",
+        "x-vercel-id": "bom1::iad1::xvbtp-1786980593671-7eb819f2ff2d"
+      }
+    },
+    "Journal Page 2": {
+      "url": "https://www.blogitems.com/journal?page=2",
+      "status": 200,
+      "statusText": "OK",
+      "latencyMs": 1315,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "age": "156",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-disposition": "inline",
+        "content-encoding": "br",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Mon, 17 Aug 2026 15:29:54 GMT",
+        "etag": "W/\"851bab8ba69513e7b710ab9821d0497a\"",
+        "referrer-policy": "origin-when-cross-origin",
+        "server": "Vercel",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "transfer-encoding": "chunked",
+        "vary": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-matched-path": "/journal",
+        "x-nextjs-prerender": "1",
+        "x-nextjs-stale-time": "300",
+        "x-vercel-cache": "STALE",
+        "x-vercel-id": "bom1::zdlvx-1786980594689-13f38df17097"
+      }
+    },
+    "Revalidate Route (GET/POST)": {
+      "url": "https://www.blogitems.com/api/revalidate?secret=blogitems-secret-revalidate-token-2026",
+      "status": 200,
+      "statusText": "OK",
+      "latencyMs": 6993,
+      "headers": {
+        "age": "0",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-encoding": "br",
+        "content-type": "application/json",
+        "date": "Mon, 17 Aug 2026 15:29:58 GMT",
+        "referrer-policy": "origin-when-cross-origin",
+        "server": "Vercel",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "transfer-encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-matched-path": "/api/revalidate",
+        "x-vercel-cache": "MISS",
+        "x-vercel-id": "bom1::iad1::6jqnd-1786980598293-094e1242844c"
+      }
+    },
+    "Revalidate Legacy Route": {
+      "url": "https://www.blogitems.com/revalidate?secret=blogitems-secret-revalidate-token-2026",
+      "status": 200,
+      "statusText": "OK",
+      "latencyMs": 4216,
+      "headers": {
+        "age": "0",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "content-encoding": "br",
+        "content-type": "application/json",
+        "date": "Mon, 17 Aug 2026 15:30:02 GMT",
+        "referrer-policy": "origin-when-cross-origin",
+        "server": "Vercel",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "transfer-encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "x-matched-path": "/revalidate",
+        "x-vercel-cache": "MISS",
+        "x-vercel-id": "bom1::iad1::t4xfv-1786980602267-914e8f3b205f"
+      }
+    },
+    "Single Post Route": {
+      "url": "https://www.blogitems.com/posts/office-hour",
+      "status": 200,
+      "latencyMs": 8148,
+      "renderedPostTitle": true
+    }
+  },
+  "timestamp": "2026-08-17T15:29:03.903Z"
+}
