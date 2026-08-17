@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const defaultKey = Buffer.from('cmVfQllBSDRMMVNfREw0cFBqQ2VRcWU0UHdhcjZhNHNhbXQx', 'base64').toString('utf-8');
+    const defaultKey = Buffer.from('cmVfUVlaUXFpSGpfQUFWZng1VVRUYlFDS3FCd2JFWnNtMW1Q', 'base64').toString('utf-8');
     const envKey = process.env.RESEND_API_KEY?.trim();
     const apiKey = (envKey && envKey.startsWith("re_") && envKey.length > 25) ? envKey : defaultKey;
     const recipientEmail = process.env.CONTACT_NOTIFICATION_EMAIL || "imz.aqib@gmail.com";
