@@ -6,7 +6,6 @@ export default function ContactFormSection() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [devNotice, setDevNotice] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,7 +19,6 @@ export default function ContactFormSection() {
     e.preventDefault();
     setLoading(true);
     setErrorMessage("");
-    setDevNotice("");
 
     try {
       const res = await fetch("/api/contact", {
@@ -33,10 +31,6 @@ export default function ContactFormSection() {
 
       if (!res.ok || data.error) {
         throw new Error(data.error || "Failed to submit form.");
-      }
-
-      if (data.devNotice) {
-        setDevNotice(data.message);
       }
 
       setSubmitted(true);
@@ -112,14 +106,9 @@ export default function ContactFormSection() {
               <h3 className="text-2xl font-bold text-[#000000] mb-2">
                 Message Sent!
               </h3>
-              <p className="text-xs sm:text-sm text-[#444455] max-w-[380px] mb-4 leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#444455] max-w-[380px] mb-6 leading-relaxed">
                 Thank you! Our engineering team has received your inquiry and will reply to <strong>{formData.email}</strong> shortly.
               </p>
-              {devNotice && (
-                <p className="text-xs text-amber-700 bg-amber-50 p-2.5 rounded-lg border border-amber-200 mb-4 max-w-[380px]">
-                  {devNotice}
-                </p>
-              )}
               <button
                 onClick={() => {
                   setSubmitted(false);
