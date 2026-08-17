@@ -1,4 +1,4 @@
-import { getPageBySlug, getAllPages, formatPostDate, calculateReadingTime, sanitizeHtml, Post } from "@/lib/wordpress";
+import { getPageBySlug, getPostBySlug, getAllPages, formatPostDate, calculateReadingTime, sanitizeHtml, Post } from "@/lib/wordpress";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -87,6 +87,9 @@ export default async function DynamicWordPressPage({
 
   try {
     page = await getPageBySlug(slug);
+    if (!page) {
+      page = await getPostBySlug(slug);
+    }
   } catch {
     // fallback if API is unreachable
   }
