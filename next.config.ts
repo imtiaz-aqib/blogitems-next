@@ -57,6 +57,26 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/journal",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/journal/:path*",
+        destination: "/blog/:path*",
+        permanent: true,
+      },
+      {
+        source: "/posts",
+        destination: "/blog",
+        permanent: true,
+      },
+      {
+        source: "/posts/:slug*",
+        destination: "/blog/:slug*",
+        permanent: true,
+      },
+      {
         source: "/hello-world",
         destination: "/",
         permanent: true,

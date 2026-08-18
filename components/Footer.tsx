@@ -161,18 +161,18 @@ export default function Footer() {
             </div>
             <ul className="space-y-2 text-xs text-white/75">
               <li>
-                <Link href="/posts/optimize-nextjs-headless-wordpress" className="hover:text-white transition">
+                <Link href="/blog/enterprise-headless-wordpress-setup-completed" className="hover:text-white transition">
                   Headless WordPress Setup
                 </Link>
               </li>
               <li>
-                <Link href="/posts/tailwind-css-v4-guide" className="hover:text-white transition">
-                  Tailwind CSS v4 Guide
+                <Link href="/blog/5-talks-at-kubecon-japan-im-looking-forward-to" className="hover:text-white transition">
+                  KubeCon Japan Guide
                 </Link>
               </li>
               <li>
-                <Link href="/posts/web-vitals-optimization" className="hover:text-white transition">
-                  Max Web Vitals Guide
+                <Link href="/blog/office-hour" className="hover:text-white transition">
+                  Latest Field Notes
                 </Link>
               </li>
             </ul>

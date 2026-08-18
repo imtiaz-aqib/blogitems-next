@@ -456,7 +456,7 @@ export default async function HomePage() {
             {/* Hero CTA Buttons */}
             <div className="flex flex-wrap items-center gap-4 mb-12">
               <Link
-                href="/journal"
+                href="/blog"
                 className="bg-[#fafafd] text-[#000000] border border-[#232141] font-bold px-7 py-3.5 rounded-xl ui-card-shadow hover:bg-[#ffcb7d] hover:text-[#232141] transition-all text-sm"
               >
                 Learn more about BlogItems
@@ -702,7 +702,7 @@ export default async function HomePage() {
             {/* Bento Card 1: Featured Post from Journal */}
             {posts[0] && (
               <Link
-                href={`/posts/${posts[0].slug}`}
+                href={`/blog/${posts[0].slug}`}
                 className="md:col-span-7 bg-[#2e2a5e] text-white rounded-2xl p-8 border-2 border-[#000000] ui-card-shadow flex flex-col justify-between group"
               >
                 <div>
@@ -725,7 +725,7 @@ export default async function HomePage() {
 
             {/* Bento Card 2: Guide */}
             <Link
-              href={`/posts/${posts[1]?.slug || "build-vs-buy-headless-cms-infrastructure"}`}
+              href={`/blog/${posts[1]?.slug || "build-vs-buy-headless-cms-infrastructure"}`}
               className="md:col-span-5 bg-[#fff9e9] text-[#232141] rounded-2xl p-8 border-2 border-[#232141] ui-card-shadow flex flex-col justify-between group"
             >
               <div>
@@ -746,7 +746,7 @@ export default async function HomePage() {
             {/* Bento Card 3: Performance */}
             {posts[2] && (
               <Link
-                href={`/posts/${posts[2].slug}`}
+                href={`/blog/${posts[2].slug}`}
                 className="md:col-span-6 bg-[#ffe09b] text-[#232141] rounded-2xl p-8 border-2 border-[#232141] ui-card-shadow flex flex-col justify-between group"
               >
                 <div>
@@ -778,7 +778,7 @@ export default async function HomePage() {
                   Hands-on walkthrough: connect your Next.js App Router project to WordPress REST API in minutes.
                 </p>
               </div>
-              <Link href="/journal" className="text-xs font-bold text-[#756df3] hover:underline">
+              <Link href="/blog" className="text-xs font-bold text-[#756df3] hover:underline">
                 Read docs &rarr;
               </Link>
             </div>
@@ -787,13 +787,13 @@ export default async function HomePage() {
           {/* Links Row */}
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
-              href="/journal"
+              href="/blog"
               className="text-xs font-semibold text-[#756df3] border border-[#756df3]/30 px-5 py-2.5 rounded-full hover:bg-[#756df3] hover:text-white transition-colors"
             >
               All blog posts &rarr;
             </Link>
             <Link
-              href="/journal"
+              href="/blog"
               className="text-xs font-semibold text-[#232141] border border-[#232141]/30 px-5 py-2.5 rounded-full hover:bg-[#232141] hover:text-white transition-colors"
             >
               All guides &rarr;
@@ -802,35 +802,23 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* SECTION 6: GET STARTED (FINAL CTA BANNER - NO FAQ SECTION!)              */}
-      {/* ========================================================================= */}
-      <section className="relative bg-[#756df3] text-white py-20 md:py-32 overflow-hidden mx-auto w-[calc(100%-32px)] max-w-[1372px] rounded-t-3xl border-2 border-b-0 border-[#232141]">
-        {/* Peek Character Illustrations */}
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-28 md:w-44 pointer-events-none hidden md:block">
-          <Image src="/cta-peek-left.svg" alt="Peek Mascot" width={180} height={180} />
-        </div>
-        <div className="absolute right-0 top-8 w-24 md:w-36 pointer-events-none hidden md:block">
-          <Image src="/cta-peek-right.svg" alt="Peek Mascot" width={140} height={140} />
-        </div>
-
-        <div className="max-w-[860px] mx-auto px-6 text-center relative z-10">
-          <span className="ui-badge-yellow text-[#232141] mb-6">GET STARTED</span>
-
-          <h2 className="font-[var(--font-display)] text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
-            Give your team the fastest dev loop in the cloud.
+      {/* CTA Section */}
+      <section className="bg-[#4842b8] text-white py-20 px-6 border-t-2 border-[#000000]">
+        <div className="max-w-[900px] mx-auto text-center">
+          <span className="ui-badge-yellow mb-6 inline-block">Get Started Today</span>
+          <h2 className="font-[var(--font-display)] text-3xl md:text-5xl font-bold mb-6 leading-tight">
+            Ready to Build a High-Performance Headless Web Application?
           </h2>
-
-          <p className="text-base md:text-lg text-white/90 leading-relaxed mb-10 max-w-[600px] mx-auto">
-            Join thousands of developers building on Headless Next.js &amp; WordPress. Free to start. No credit card required.
+          <p className="text-base md:text-xl text-white/90 leading-relaxed mb-10 max-w-[700px] mx-auto">
+            Decouple your WordPress architecture, eliminate server bloat, and deliver instant sub-second page loads globally.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 mb-6">
             <Link
               href="/contact"
-              className="bg-white text-[#000000] border-2 border-[#232141] font-bold px-8 py-4 rounded-xl shadow-[4px_5px_#232141] hover:bg-[#ffcb7d] hover:text-[#232141] transition-all text-base"
+              className="ui-btn-yellow font-bold text-[#232141] px-8 py-4 rounded-xl text-base"
             >
-              Try Free! No Card Required
+              Get Started Now &rarr;
             </Link>
             <Link
               href="/contact"
@@ -840,7 +828,7 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          <Link href="/journal" className="text-xs text-white/70 hover:text-white transition-colors underline">
+          <Link href="/blog" className="text-xs text-white/70 hover:text-white transition-colors underline">
             Read the docs &rarr;
           </Link>
         </div>

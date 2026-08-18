@@ -13,7 +13,7 @@ export default function FeaturedPostCard({ post }: { post: Post }) {
 
   return (
     <div className="mb-12">
-      <Link href={`/posts/${post.slug}`} className="group block">
+      <Link href={`/blog/${post.slug}`} className="group block">
         <article className="grid grid-cols-1 md:grid-cols-2 bg-white border border-[#000000] rounded-2xl overflow-hidden ui-card-shadow">
           {/* Featured Image */}
           <div className="relative min-h-[260px] md:min-h-[340px] bg-[#e4e3fd] border-b md:border-b-0 md:border-r border-[#000000] overflow-hidden">

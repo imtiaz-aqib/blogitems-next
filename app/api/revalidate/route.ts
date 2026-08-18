@@ -25,15 +25,15 @@ export async function POST(request: NextRequest) {
     }
 
     // Instantly purge Next.js CDN static HTML cache
-    revalidatePath("/journal");
+    revalidatePath("/blog");
     revalidatePath("/");
     if (slug) {
-      revalidatePath(`/posts/${slug}`);
+      revalidatePath(`/blog/${slug}`);
     }
 
     return NextResponse.json({
       revalidated: true,
-      purgedPaths: ["/journal", "/", slug ? `/posts/${slug}` : null].filter(Boolean),
+      purgedPaths: ["/blog", "/", slug ? `/blog/${slug}` : null].filter(Boolean),
       now: Date.now(),
     });
   } catch (err: unknown) {

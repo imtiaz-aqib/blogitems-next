@@ -27,10 +27,10 @@ export default function NotFound() {
               Home
             </Link>
             <Link
-              href="/journal"
+              href="/blog"
               className="text-sm font-semibold text-white/90 hover:text-white transition-colors"
             >
-              Journal
+              Blog
             </Link>
             <Link
               href="/contact"
@@ -71,10 +71,10 @@ export default function NotFound() {
                 Return to Homepage &rarr;
               </Link>
               <Link
-                href="/journal"
+                href="/blog"
                 className="bg-[#5f58d6] text-white border border-white/30 font-semibold px-7 py-3.5 rounded-xl hover:bg-[#4a44b8] transition-all text-sm shadow-[4px_5px_#232141]"
               >
-                Browse Journal Articles
+                Browse Blog Articles
               </Link>
             </div>
           </div>

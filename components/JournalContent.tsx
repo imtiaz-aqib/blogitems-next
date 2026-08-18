@@ -51,7 +51,7 @@ export default function JournalContent({ posts }: JournalContentProps) {
         currentPage={currentPage}
         totalPosts={totalPosts}
         pageSize={pageSize}
-        baseUrl="/journal"
+        baseUrl="/blog"
       />
     </div>
   );

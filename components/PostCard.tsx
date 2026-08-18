@@ -11,7 +11,7 @@ export default function PostCard({ post }: { post: Post }) {
   const readingTime = calculateReadingTime(post.content?.rendered);
 
   return (
-    <Link href={`/posts/${post.slug}`} className="group block h-full">
+    <Link href={`/blog/${post.slug}`} className="group block h-full">
       <article className="bg-white border border-[#000000] rounded-2xl overflow-hidden ui-card-shadow flex flex-col h-full">
         {/* Card Thumbnail */}
         <div className="relative h-48 sm:h-52 w-full bg-[#e4e3fd] border-b border-[#000000] overflow-hidden flex-shrink-0">

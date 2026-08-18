@@ -13,16 +13,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/journal`,
+      url: `${baseUrl}/blog`,
       lastModified: new Date().toISOString(),
       changeFrequency: "daily",
       priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/posts`,
-      lastModified: new Date().toISOString(),
-      changeFrequency: "daily",
-      priority: 0.8,
     },
     {
       url: `${baseUrl}/contact`,
@@ -35,12 +29,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const posts = await getAllPosts();
     const postUrls: MetadataRoute.Sitemap = posts.map((post) => ({
-      url: `${baseUrl}/posts/${post.slug}`,
+      url: `${baseUrl}/blog/${post.slug}`,
       lastModified: post.date?.rendered
         ? new Date(post.date.rendered).toISOString()
         : new Date().toISOString(),
       changeFrequency: "weekly",
-      priority: 0.7,
+      priority: 0.8,
     }));
 
     const pages = await getAllPages();

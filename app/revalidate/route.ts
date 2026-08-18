@@ -26,9 +26,9 @@ export async function POST(request: NextRequest) {
 
     try {
       revalidatePath("/", "layout");
-      revalidatePath("/journal", "page");
+      revalidatePath("/blog", "page");
       if (slug) {
-        revalidatePath(`/posts/${slug}`, "page");
+        revalidatePath(`/blog/${slug}`, "page");
       }
     } catch (e) {
       console.error("revalidate error:", e);
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       revalidated: true,
-      purgedPaths: ["/journal", "/", slug ? `/posts/${slug}` : null].filter(Boolean),
+      purgedPaths: ["/blog", "/", slug ? `/blog/${slug}` : null].filter(Boolean),
       now: Date.now(),
     });
   } catch (err: unknown) {

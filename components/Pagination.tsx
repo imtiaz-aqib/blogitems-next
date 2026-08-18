@@ -13,7 +13,7 @@ export default function Pagination({
   currentPage = 1,
   totalPosts = 0,
   pageSize = 6,
-  baseUrl = "/journal",
+  baseUrl = "/blog",
 }: PaginationProps) {
   const safePageSize = Math.max(1, pageSize || 6);
   const safeTotalPosts = Math.max(0, totalPosts || 0);

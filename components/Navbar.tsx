@@ -75,8 +75,8 @@ export default function Navbar() {
           <Link href="/showcase" className={`px-3 py-1.5 rounded-lg transition ${pathname === "/showcase" ? "text-[#756df3] font-semibold bg-[#e4e3fd]/60" : "hover:text-[#756df3] hover:bg-[#e4e3fd]"}`}>
             Showcase
           </Link>
-          <Link href="/journal" className={`px-3 py-1.5 rounded-lg transition ${pathname === "/journal" ? "text-[#756df3] font-semibold bg-[#e4e3fd]/60" : "hover:text-[#756df3] hover:bg-[#e4e3fd]"}`}>
-            Journal
+          <Link href="/blog" className={`px-3 py-1.5 rounded-lg transition ${pathname?.startsWith("/blog") ? "text-[#756df3] font-semibold bg-[#e4e3fd]/60" : "hover:text-[#756df3] hover:bg-[#e4e3fd]"}`}>
+            Blog
           </Link>
           <Link href="/contact" className={`px-3 py-1.5 rounded-lg transition ${pathname === "/contact" ? "text-[#756df3] font-semibold bg-[#e4e3fd]/60" : "hover:text-[#756df3] hover:bg-[#e4e3fd]"}`}>
             Contact
@@ -109,8 +109,8 @@ export default function Navbar() {
       {/* Mobile Drawer */}
       {mobileOpen && (
         <div className="md:hidden bg-[#fafafd] border border-[#e4e3fd] border-t-0 rounded-b-2xl p-5 shadow-2xl flex flex-col gap-3">
-          <Link href="/journal" onClick={() => setMobileOpen(false)} className="text-sm font-semibold text-[#756df3] py-2 border-b border-[#e4e3fd]">
-            Journal (Blog)
+          <Link href="/blog" onClick={() => setMobileOpen(false)} className="text-sm font-semibold text-[#756df3] py-2 border-b border-[#e4e3fd]">
+            Blog
           </Link>
           <Link href="/solutions" onClick={() => setMobileOpen(false)} className="text-sm font-medium text-[#232141] py-2 border-b border-[#e4e3fd]">
             Solutions
