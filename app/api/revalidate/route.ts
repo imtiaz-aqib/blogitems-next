@@ -3,15 +3,29 @@ import { revalidatePath } from "next/cache";
 
 export async function POST(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const secret = searchParams.get("secret");
+    const REVALIDATE_SECRET = process.env.REVALIDATE_SECRET?.trim();
 
-    const REVALIDATE_SECRET =
-      process.env.REVALIDATE_SECRET || "blogitems-secret-revalidate-token-2026";
-
-    if (secret !== REVALIDATE_SECRET) {
+    if (!REVALIDATE_SECRET) {
+      console.error("REVALIDATE_SECRET is not configured in server environment.");
       return NextResponse.json(
-        { message: "Invalid revalidation secret token" },
+        { message: "Revalidation service is not configured on the server." },
+        { status: 500 }
+      );
+    }
+
+    // Extract secret strictly from protected headers (avoids logging secrets in URL query strings)
+    const headerSecret = request.headers.get("x-revalidate-secret");
+    const authHeader = request.headers.get("authorization");
+    let bearerToken = "";
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+      bearerToken = authHeader.substring(7).trim();
+    }
+
+    const providedSecret = headerSecret || bearerToken;
+
+    if (!providedSecret || providedSecret !== REVALIDATE_SECRET) {
+      return NextResponse.json(
+        { message: "Unauthorized: Invalid or missing revalidation secret header." },
         { status: 401 }
       );
     }
@@ -19,29 +33,44 @@ export async function POST(request: NextRequest) {
     let slug = "";
     try {
       const body = await request.json();
-      slug = body?.post?.post_name || body?.slug || "";
+      slug = body?.post?.post_name || body?.slug || body?.post_name || "";
     } catch {
-      // Body empty or non-JSON
+      // Body is empty or not JSON
     }
 
-    // Instantly purge Next.js CDN static HTML cache
+    // Purge cached paths
     revalidatePath("/blog");
     revalidatePath("/");
     if (slug) {
       revalidatePath(`/blog/${slug}`);
+      revalidatePath(`/${slug}`);
     }
 
     return NextResponse.json({
       revalidated: true,
-      purgedPaths: ["/blog", "/", slug ? `/blog/${slug}` : null].filter(Boolean),
-      now: Date.now(),
+      purgedPaths: [
+        "/blog",
+        "/",
+        slug ? `/blog/${slug}` : null,
+        slug ? `/${slug}` : null,
+      ].filter(Boolean),
+      timestamp: Date.now(),
     });
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Error revalidating";
+    const message = err instanceof Error ? err.message : "Error during revalidation";
     return NextResponse.json({ message }, { status: 500 });
   }
 }
 
-export async function GET(request: NextRequest) {
-  return POST(request);
+// Strictly disallow GET method to prevent mutation via link prefetching or query log leaks
+export async function GET() {
+  return NextResponse.json(
+    { error: "Method Not Allowed. Cache revalidation requires an authenticated POST request." },
+    {
+      status: 405,
+      headers: {
+        Allow: "POST",
+      },
+    }
+  );
 }

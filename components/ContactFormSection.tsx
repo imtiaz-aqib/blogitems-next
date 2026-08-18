@@ -13,6 +13,7 @@ export default function ContactFormSection() {
     company: "",
     role: "",
     message: "",
+    website: "", // Honeypot trap field (hidden from human users)
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -44,9 +45,9 @@ export default function ContactFormSection() {
 
   return (
     <div className="max-w-[1140px] mx-auto px-6 py-6 md:py-10 flex flex-col gap-14">
-      {/* 1. Main MetalBear Chat & Form Grid */}
+      {/* 1. Main Chat & Form Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-        {/* Left Column: MetalBear Copy & Bullet List */}
+        {/* Left Column: Copy & Bullet List */}
         <div className="lg:col-span-5 flex flex-col items-start justify-center">
           {/* Yellow Badge Pill */}
           <span className="inline-block bg-[#ffcb7d] text-[#000000] border-2 border-[#000000] font-extrabold text-[11px] uppercase tracking-wider px-3.5 py-1 rounded-full mb-4 shadow-[2px_2px_#000000]">
@@ -94,7 +95,7 @@ export default function ContactFormSection() {
           </p>
         </div>
 
-        {/* Right Column: MetalBear Style Form Card */}
+        {/* Right Column: Form Card */}
         <div className="lg:col-span-7 bg-white border-2 border-[#000000] rounded-2xl p-6 sm:p-8 shadow-[6px_8px_0px_#232141]">
           {submitted ? (
             <div className="py-10 text-center flex flex-col items-center justify-center">
@@ -112,7 +113,7 @@ export default function ContactFormSection() {
               <button
                 onClick={() => {
                   setSubmitted(false);
-                  setFormData({ name: "", email: "", phone: "", company: "", role: "", message: "" });
+                  setFormData({ name: "", email: "", phone: "", company: "", role: "", message: "", website: "" });
                 }}
                 className="bg-[#5f58d6] text-white border-2 border-[#000000] font-bold text-xs px-6 py-2.5 rounded-xl shadow-[3px_3px_#000000] hover:bg-[#4a44b8] transition"
               >
@@ -121,6 +122,20 @@ export default function ContactFormSection() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              {/* Honeypot field (hidden from screen readers and visual users) */}
+              <div aria-hidden="true" style={{ display: "none", position: "absolute", left: "-9999px" }}>
+                <label htmlFor="website-hp">Leave this empty</label>
+                <input
+                  id="website-hp"
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={formData.website}
+                  onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                />
+              </div>
+
               {/* Name Field */}
               <div>
                 <label className="block text-xs font-bold text-[#000000] mb-1.5">
@@ -129,6 +144,7 @@ export default function ContactFormSection() {
                 <input
                   type="text"
                   required
+                  maxLength={100}
                   placeholder="Jane Smith"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -145,6 +161,7 @@ export default function ContactFormSection() {
                   <input
                     type="email"
                     required
+                    maxLength={120}
                     placeholder="jane@company.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -158,6 +175,7 @@ export default function ContactFormSection() {
                   </label>
                   <input
                     type="tel"
+                    maxLength={50}
                     placeholder="+1 555 0100"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -174,6 +192,7 @@ export default function ContactFormSection() {
                   </label>
                   <input
                     type="text"
+                    maxLength={120}
                     placeholder="Acme Inc."
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
@@ -187,6 +206,7 @@ export default function ContactFormSection() {
                   </label>
                   <input
                     type="text"
+                    maxLength={100}
                     placeholder="Platform Engineer"
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value })}
@@ -202,6 +222,7 @@ export default function ContactFormSection() {
                 </label>
                 <textarea
                   required
+                  maxLength={3000}
                   rows={3}
                   placeholder="I'd like to book a demo, learn about pricing, or.."
                   value={formData.message}
