@@ -36,7 +36,7 @@ export async function POST(request: Request) {
     // 3. Initialize Resend & send email via verified custom domain
     const resend = new Resend(apiKey);
     const { data, error } = await resend.emails.send({
-      from: "BlogItems Contact <contact@blogitems.com>",
+      from: "Support | BlogItems <hi@blogitems.com>",
       to: [recipientEmail],
       replyTo: email,
       subject: `New BlogItems Contact Form Submission from ${name}`,

@@ -458,11 +458,31 @@ export async function generateMetadata({
     };
   }
 
-  const cleanDescription = post.excerpt.rendered.replace(/<[^>]+>/g, "").trim();
+  const cleanDescription = post.excerpt?.rendered
+    ? post.excerpt.rendered.replace(/<[^>]+>/g, "").trim()
+    : "";
+  const postTitle = post.title?.rendered || "Blog Article";
+  const featuredImage = post._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
 
   return {
-    title: `${post.title.rendered} | BlogItems Journal`,
+    title: `${postTitle} | BlogItems Journal`,
     description: cleanDescription,
+    alternates: {
+      canonical: `/posts/${slug}`,
+    },
+    openGraph: {
+      title: `${postTitle} | BlogItems Journal`,
+      description: cleanDescription,
+      url: `https://www.blogitems.com/posts/${slug}`,
+      type: "article",
+      images: featuredImage ? [{ url: featuredImage }] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${postTitle} | BlogItems Journal`,
+      description: cleanDescription,
+      images: featuredImage ? [featuredImage] : [],
+    },
   };
 }
 
@@ -492,6 +512,7 @@ export default async function PostPage({
   const authorName = post._embedded?.["author"]?.[0]?.name || "BlogItems Editorial";
   const dateFormatted = formatPostDate(post.date?.rendered || (post as unknown as Record<string, string>).date);
   const readingTime = calculateReadingTime(post.content?.rendered);
+  const postTitle = post.title?.rendered || "Blog Article";
 
   return (
     <article className="pt-[100px]">
@@ -510,7 +531,7 @@ export default async function PostPage({
 
           <h1
             className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6 leading-tight"
-            dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.title.rendered) }}
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(postTitle) }}
           />
 
           <div className="flex flex-wrap items-center gap-3 text-xs md:text-sm text-white/90 font-medium pt-4 border-t border-white/20">

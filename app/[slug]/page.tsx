@@ -69,11 +69,22 @@ export async function generateMetadata({
     };
   }
 
-  const cleanDescription = page.excerpt.rendered.replace(/<[^>]+>/g, "").trim();
+  const cleanDescription = page.excerpt?.rendered
+    ? page.excerpt.rendered.replace(/<[^>]+>/g, "").trim()
+    : "";
+  const pageTitle = page.title?.rendered || "Page";
 
   return {
-    title: `${page.title.rendered} | BlogItems`,
+    title: `${pageTitle} | BlogItems`,
     description: cleanDescription,
+    alternates: {
+      canonical: `/${slug}`,
+    },
+    openGraph: {
+      title: `${pageTitle} | BlogItems`,
+      description: cleanDescription,
+      url: `https://www.blogitems.com/${slug}`,
+    },
   };
 }
 
@@ -106,6 +117,7 @@ export default async function DynamicWordPressPage({
   const authorName = page._embedded?.["author"]?.[0]?.name || "BlogItems Team";
   const dateFormatted = formatPostDate(page.date?.rendered || (page as unknown as Record<string, string>).date);
   const readingTime = calculateReadingTime(page.content?.rendered);
+  const pageTitle = page.title?.rendered || "Page";
 
   return (
     <article className="pt-[100px]">
@@ -124,7 +136,7 @@ export default async function DynamicWordPressPage({
 
           <h1
             className="text-3xl md:text-5xl font-bold tracking-tight text-white mb-6 leading-tight"
-            dangerouslySetInnerHTML={{ __html: sanitizeHtml(page.title.rendered) }}
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(pageTitle) }}
           />
 
           <div className="flex flex-wrap items-center gap-3 text-xs md:text-sm text-white/90 font-medium pt-4 border-t border-white/20">

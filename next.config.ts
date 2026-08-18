@@ -54,6 +54,55 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/hello-world",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/hello-world/:path*",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/courses",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/courses/:path*",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/2021/:path*",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/2022/:path*",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/2023/:path*",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/2024/:path*",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/2025/:path*",
+        destination: "/",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
