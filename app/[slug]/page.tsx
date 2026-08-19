@@ -202,15 +202,17 @@ export default async function DynamicWordPressPage({
 
   // If not a WP Page or static fallback, check if it's a Blog Post
   // and permanently redirect to /blog/[slug] to eliminate duplicate SEO routes!
+  let post = null;
   if (!page) {
     try {
-      const post = await getPostBySlug(slug);
-      if (post) {
-        redirect(`/blog/${slug}`);
-      }
+      post = await getPostBySlug(slug);
     } catch {
-      // ignore
+      // ignore API failure
     }
+  }
+
+  if (post) {
+    redirect(`/blog/${slug}`);
   }
 
   if (!page) {

@@ -36,11 +36,13 @@ function shouldFetch(): boolean {
 
 // Clean, resilient fetch wrapper with automatic retries for Next.js 16
 async function safeFetch(url: string, options: RequestInit = {}): Promise<Response | null> {
-  const maxRetries = 3;
+  const maxRetries = 2;
+  const timeoutMs = 4000; // 4s timeout per attempt to guarantee response within Vercel's serverless budget
+
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000);
+      const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
       const res = await fetch(url, {
         next: { revalidate: 60, tags: ["posts"] },
@@ -55,7 +57,7 @@ async function safeFetch(url: string, options: RequestInit = {}): Promise<Respon
       if (res.ok) return res;
     } catch {
       if (attempt < maxRetries) {
-        await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
+        await new Promise((resolve) => setTimeout(resolve, 500));
       }
     }
   }
