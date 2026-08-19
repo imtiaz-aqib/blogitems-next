@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getAllPosts, getAllPages } from "@/lib/wordpress";
+import { fetchAllSitemapPostEntries, fetchAllSitemapPageEntries } from "@/lib/wordpress";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.blogitems.com").replace(/\/$/, "");
@@ -27,21 +27,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   try {
-    const posts = await getAllPosts();
-    const postUrls: MetadataRoute.Sitemap = posts.map((post) => ({
+    const postEntries = await fetchAllSitemapPostEntries();
+    const postUrls: MetadataRoute.Sitemap = postEntries.map((post) => ({
       url: `${baseUrl}/blog/${post.slug}`,
-      lastModified: post.date?.rendered
-        ? new Date(post.date.rendered).toISOString()
+      lastModified: post.date
+        ? new Date(post.date).toISOString()
         : new Date().toISOString(),
       changeFrequency: "weekly",
       priority: 0.8,
     }));
 
-    const pages = await getAllPages();
-    const pageUrls: MetadataRoute.Sitemap = pages.map((page) => ({
+    const pageEntries = await fetchAllSitemapPageEntries();
+    const pageUrls: MetadataRoute.Sitemap = pageEntries.map((page) => ({
       url: `${baseUrl}/${page.slug}`,
-      lastModified: page.date?.rendered
-        ? new Date(page.date.rendered).toISOString()
+      lastModified: page.date
+        ? new Date(page.date).toISOString()
         : new Date().toISOString(),
       changeFrequency: "monthly",
       priority: 0.6,

@@ -1,6 +1,3 @@
-"use client";
-
-import { useSearchParams } from "next/navigation";
 import { Post } from "@/lib/wordpress";
 import FeaturedPostCard from "@/components/FeaturedPostCard";
 import PostCard from "@/components/PostCard";
@@ -8,28 +5,26 @@ import Pagination from "@/components/Pagination";
 
 interface JournalContentProps {
   posts: Post[];
+  currentPage: number;
+  totalPosts: number;
+  pageSize: number;
 }
 
-export default function JournalContent({ posts }: JournalContentProps) {
-  const searchParams = useSearchParams();
-  const pageParam = searchParams.get("page");
-  const currentPage = Math.max(1, parseInt(pageParam || "1", 10));
-  const pageSize = 6;
-
-  const totalPosts = posts.length;
+export default function JournalContent({
+  posts,
+  currentPage,
+  totalPosts,
+  pageSize,
+}: JournalContentProps) {
   let featuredPost: Post | null = null;
   let gridPosts: Post[] = [];
 
   if (currentPage === 1 && posts.length > 0) {
     featuredPost = posts[0] || null;
-    gridPosts = posts.slice(1, 1 + pageSize);
+    gridPosts = posts.slice(1);
   } else {
     featuredPost = null;
-    const startIndex = (currentPage - 1) * pageSize;
-    gridPosts = posts.slice(startIndex, startIndex + pageSize);
-    if (gridPosts.length === 0 && posts.length > 0) {
-      gridPosts = posts.slice(0, pageSize);
-    }
+    gridPosts = posts;
   }
 
   return (

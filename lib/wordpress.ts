@@ -21,6 +21,11 @@ export interface PaginatedPostsResult {
   totalPages: number;
 }
 
+export interface SitemapEntry {
+  slug: string;
+  date: string;
+}
+
 function shouldFetch(): boolean {
   if (!API_URL) return false;
   if (process.env.VERCEL && (API_URL.includes(".local") || API_URL.includes("localhost"))) {
@@ -65,7 +70,10 @@ export async function getPaginatedPosts(
     return { posts: [], totalPosts: 0, totalPages: 0 };
   }
 
-  const res = await safeFetch(`${API_URL}/posts?_embed&page=${page}&per_page=${perPage}`);
+  const safePage = Math.max(1, Math.floor(page));
+  const safePerPage = Math.max(1, Math.min(100, Math.floor(perPage)));
+
+  const res = await safeFetch(`${API_URL}/posts?_embed&page=${safePage}&per_page=${safePerPage}`);
   if (!res) {
     return { posts: [], totalPosts: 0, totalPages: 0 };
   }
@@ -104,11 +112,12 @@ export async function getAllPosts(): Promise<Post[]> {
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
-  if (!shouldFetch()) {
+  if (!shouldFetch() || !slug) {
     return null;
   }
 
-  const res = await safeFetch(`${API_URL}/posts?slug=${slug}&_embed`);
+  const safeSlug = encodeURIComponent(slug.trim());
+  const res = await safeFetch(`${API_URL}/posts?slug=${safeSlug}&_embed`);
   if (!res) {
     return null;
   }
@@ -122,11 +131,12 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
 }
 
 export async function getPageBySlug(slug: string): Promise<Post | null> {
-  if (!shouldFetch()) {
+  if (!shouldFetch() || !slug) {
     return null;
   }
 
-  const res = await safeFetch(`${API_URL}/pages?slug=${slug}&_embed`);
+  const safeSlug = encodeURIComponent(slug.trim());
+  const res = await safeFetch(`${API_URL}/pages?slug=${safeSlug}&_embed`);
   if (!res) {
     return null;
   }
@@ -157,6 +167,71 @@ export async function getAllPages(): Promise<Post[]> {
   }
 }
 
+// Complete pagination traversal for generating 100% comprehensive XML sitemaps
+export async function fetchAllSitemapPostEntries(): Promise<SitemapEntry[]> {
+  if (!shouldFetch()) return [];
+  const entries: SitemapEntry[] = [];
+  let page = 1;
+  const perPage = 100;
+  const maxSafeCeiling = 100; // Up to 10,000 posts supported
+
+  while (page <= maxSafeCeiling) {
+    const res = await safeFetch(`${API_URL}/posts?_fields=slug,date&page=${page}&per_page=${perPage}`);
+    if (!res) break;
+
+    try {
+      const items: Array<{ slug: string; date: string }> = await res.json();
+      if (!Array.isArray(items) || items.length === 0) break;
+
+      for (const item of items) {
+        if (item.slug) {
+          entries.push({ slug: item.slug, date: item.date });
+        }
+      }
+
+      const totalPagesHeader = parseInt(res.headers.get("x-wp-totalpages") || "1", 10);
+      if (page >= totalPagesHeader) break;
+      page++;
+    } catch {
+      break;
+    }
+  }
+
+  return entries;
+}
+
+export async function fetchAllSitemapPageEntries(): Promise<SitemapEntry[]> {
+  if (!shouldFetch()) return [];
+  const entries: SitemapEntry[] = [];
+  let page = 1;
+  const perPage = 100;
+  const maxSafeCeiling = 50; // Up to 5,000 pages supported
+
+  while (page <= maxSafeCeiling) {
+    const res = await safeFetch(`${API_URL}/pages?_fields=slug,date&page=${page}&per_page=${perPage}`);
+    if (!res) break;
+
+    try {
+      const items: Array<{ slug: string; date: string }> = await res.json();
+      if (!Array.isArray(items) || items.length === 0) break;
+
+      for (const item of items) {
+        if (item.slug) {
+          entries.push({ slug: item.slug, date: item.date });
+        }
+      }
+
+      const totalPagesHeader = parseInt(res.headers.get("x-wp-totalpages") || "1", 10);
+      if (page >= totalPagesHeader) break;
+      page++;
+    } catch {
+      break;
+    }
+  }
+
+  return entries;
+}
+
 export function formatPostDate(dateString?: string): string {
   if (!dateString) return "Recent";
   try {
@@ -181,7 +256,23 @@ export function calculateReadingTime(htmlContent?: string): string {
 
 export function sanitizeHtml(rawHtml?: string): string {
   if (!rawHtml) return "";
-  return DOMPurify.sanitize(rawHtml, {
+  const cleaned = DOMPurify.sanitize(rawHtml, {
     ADD_ATTR: ["target", "rel"],
   });
+
+  // Strict enforcement: Ensure all target="_blank" links have rel="noopener noreferrer"
+  return cleaned
+    .replace(
+      /<a\s+(?:[^>]*?\s+)?target="_blank"(?![^>]*\brel=)[^>]*>/gi,
+      (match) => match.replace("<a ", '<a rel="noopener noreferrer" ')
+    )
+    .replace(
+      /<a\s+([^>]*?)rel="([^"]*)"([^>]*)target="_blank"([^>]*)>/gi,
+      (_match, p1, rel, p3, p4) => {
+        const parts = new Set(rel.split(/\s+/).filter(Boolean));
+        parts.add("noopener");
+        parts.add("noreferrer");
+        return `<a ${p1}rel="${Array.from(parts).join(" ")}"${p3}target="_blank"${p4}>`;
+      }
+    );
 }

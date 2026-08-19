@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import TurnstileWidget from "@/components/TurnstileWidget";
 
 export default function ContactFormSection() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -25,7 +27,10 @@ export default function ContactFormSection() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          turnstileToken,
+        }),
       });
 
       const data = await res.json();
@@ -113,6 +118,7 @@ export default function ContactFormSection() {
               <button
                 onClick={() => {
                   setSubmitted(false);
+                  setTurnstileToken("");
                   setFormData({ name: "", email: "", phone: "", company: "", role: "", message: "", website: "" });
                 }}
                 className="bg-[#5f58d6] text-white border-2 border-[#000000] font-bold text-xs px-6 py-2.5 rounded-xl shadow-[3px_3px_#000000] hover:bg-[#4a44b8] transition"
@@ -230,6 +236,12 @@ export default function ContactFormSection() {
                   className="w-full px-4 py-2.5 rounded-xl border border-[#d1d1dd] text-xs sm:text-sm text-[#000000] bg-[#ffffff] focus:outline-none focus:border-[#5f58d6] focus:ring-1 focus:ring-[#5f58d6]"
                 />
               </div>
+
+              {/* Cloudflare Turnstile Bot Protection Widget */}
+              <TurnstileWidget
+                onVerify={(token) => setTurnstileToken(token)}
+                onExpire={() => setTurnstileToken("")}
+              />
 
               {/* Error Banner */}
               {errorMessage && (

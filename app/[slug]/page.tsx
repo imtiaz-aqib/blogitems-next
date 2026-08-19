@@ -1,11 +1,11 @@
 import { getPageBySlug, getPostBySlug, getAllPages, formatPostDate, calculateReadingTime, sanitizeHtml, Post } from "@/lib/wordpress";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import CtaSection from "@/components/CtaSection";
 
-// Fallback pages if WordPress API is offline during initial build
+// Fallback pages if WordPress API is offline or page is not yet published in WP
 const FALLBACK_PAGES: Record<string, Post> = {
   about: {
     id: 1725,
@@ -23,6 +23,100 @@ const FALLBACK_PAGES: Record<string, Post> = {
           <li><strong>Core Web Vitals Optimization:</strong> Eliminating layout shifts (CLS), reducing blocking time (TBT), and boosting LCP speed.</li>
           <li><strong>Full-Stack Cloud Solutions:</strong> Scalable serverless API gateways, edge caching, and automated deployment pipelines.</li>
         </ul>
+      `,
+    },
+    date: { rendered: "2026-08-01T10:00:00" },
+    _embedded: {
+      author: [{ name: "BlogItems Team" }],
+    },
+  },
+  privacy: {
+    id: 1726,
+    slug: "privacy",
+    title: { rendered: "Privacy Policy" },
+    excerpt: { rendered: "Our privacy policy explains how BlogItems protects and handles your personal information." },
+    content: {
+      rendered: `
+        <p>At BlogItems, we prioritize the protection and confidentiality of your personal data. This Privacy Policy details the types of information we collect, how it is utilized, and your rights regarding your personal data.</p>
+        <h2>Information We Collect</h2>
+        <p>We only collect information directly provided by you through our contact and inquiry forms (such as name, email address, phone number, and message content).</p>
+        <h2>Data Security</h2>
+        <p>We implement enterprise-grade encryption and security headers to protect against unauthorized access, alteration, or disclosure of your personal data.</p>
+      `,
+    },
+    date: { rendered: "2026-08-01T10:00:00" },
+    _embedded: {
+      author: [{ name: "BlogItems Legal Team" }],
+    },
+  },
+  careers: {
+    id: 1727,
+    slug: "careers",
+    title: { rendered: "Join the BlogItems Engineering Team" },
+    excerpt: { rendered: "Explore career opportunities at BlogItems and build cutting-edge web infrastructure with us." },
+    content: {
+      rendered: `
+        <p>We are always on the lookout for passionate full-stack engineers, Next.js specialists, and cloud architects who love crafting blazing-fast web experiences.</p>
+        <h2>Why Join Us?</h2>
+        <ul>
+          <li>100% Remote-First Culture</li>
+          <li>Competitive Salary & Equity Packages</li>
+          <li>Continuous Learning & Conference Allowances</li>
+        </ul>
+        <p>Send your portfolio or GitHub profile to <a href="mailto:careers@blogitems.com">careers@blogitems.com</a>.</p>
+      `,
+    },
+    date: { rendered: "2026-08-01T10:00:00" },
+    _embedded: {
+      author: [{ name: "BlogItems Talent Team" }],
+    },
+  },
+  docs: {
+    id: 1728,
+    slug: "docs",
+    title: { rendered: "Documentation & Technical Guides" },
+    excerpt: { rendered: "Architecture reference and integration guides for BlogItems Headless WordPress platform." },
+    content: {
+      rendered: `
+        <p>Welcome to the BlogItems developer documentation. Learn how our headless architecture connects WordPress REST APIs with Next.js 16 App Router.</p>
+        <h2>Quick Start</h2>
+        <p>Explore our open-source tools, API webhooks, and On-Demand Revalidation endpoints.</p>
+      `,
+    },
+    date: { rendered: "2026-08-01T10:00:00" },
+    _embedded: {
+      author: [{ name: "BlogItems Engineering" }],
+    },
+  },
+  "case-studies": {
+    id: 1729,
+    slug: "case-studies",
+    title: { rendered: "Client Case Studies" },
+    excerpt: { rendered: "Read how leading enterprises accelerated their page speed by 300% with BlogItems." },
+    content: {
+      rendered: `
+        <p>Discover real-world results from organizations that migrated their legacy monolith websites to our decoupled Next.js 16 stack.</p>
+        <h2>Key Metrics Achieved</h2>
+        <ul>
+          <li>LCP reduced from 4.2s to 650ms</li>
+          <li>Zero server downtime during traffic spikes</li>
+          <li>100% SEO indexing and organic traffic growth</li>
+        </ul>
+      `,
+    },
+    date: { rendered: "2026-08-01T10:00:00" },
+    _embedded: {
+      author: [{ name: "BlogItems Team" }],
+    },
+  },
+  showcase: {
+    id: 1730,
+    slug: "showcase",
+    title: { rendered: "Project Showcase" },
+    excerpt: { rendered: "Featured web platforms and enterprise web applications engineered by BlogItems." },
+    content: {
+      rendered: `
+        <p>A curated showcase of high-performance websites powered by Next.js, Tailwind CSS, and headless content infrastructure.</p>
       `,
     },
     date: { rendered: "2026-08-01T10:00:00" },
@@ -98,15 +192,25 @@ export default async function DynamicWordPressPage({
 
   try {
     page = await getPageBySlug(slug);
-    if (!page) {
-      page = await getPostBySlug(slug);
-    }
   } catch {
     // fallback if API is unreachable
   }
 
   if (!page && FALLBACK_PAGES[slug]) {
     page = FALLBACK_PAGES[slug];
+  }
+
+  // If not a WP Page or static fallback, check if it's a Blog Post
+  // and permanently redirect to /blog/[slug] to eliminate duplicate SEO routes!
+  if (!page) {
+    try {
+      const post = await getPostBySlug(slug);
+      if (post) {
+        redirect(`/blog/${slug}`);
+      }
+    } catch {
+      // ignore
+    }
   }
 
   if (!page) {

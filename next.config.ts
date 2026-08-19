@@ -2,12 +2,14 @@ import type { NextConfig } from "next";
 
 const cspHeader = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com;
+  script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://va.vercel-scripts.com https://challenges.cloudflare.com;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   font-src 'self' https://fonts.gstatic.com data:;
-  img-src 'self' data: blob: https://aqib-xyz.stackstaging.com https://blogitems.com https://www.blogitems.com https://images.unsplash.com https://assets.lottiefiles.com;
-  connect-src 'self' https://aqib-xyz.stackstaging.com https://api.resend.com https://vitals.vercel-insights.com https://va.vercel-scripts.com https://*.upstash.io;
+  img-src 'self' data: blob: https://aqib-xyz.stackstaging.com https://blogitems.com https://www.blogitems.com https://images.unsplash.com https://assets.lottiefiles.com https://lottie.host https://*.lottiefiles.com;
+  connect-src 'self' https://aqib-xyz.stackstaging.com https://api.resend.com https://vitals.vercel-insights.com https://va.vercel-scripts.com https://*.upstash.io https://lottie.host https://*.lottie.host https://assets.lottiefiles.com https://*.lottiefiles.com https://challenges.cloudflare.com;
+  frame-src 'self' https://challenges.cloudflare.com;
   worker-src 'self' blob:;
+  child-src 'self' blob:;
   object-src 'none';
   base-uri 'self';
   form-action 'self';
@@ -18,20 +20,8 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: "aqib-xyz.stackstaging.com",
-      },
-      {
         protocol: "https",
         hostname: "aqib-xyz.stackstaging.com",
-      },
-      {
-        protocol: "http",
-        hostname: "blogitems.local",
-      },
-      {
-        protocol: "http",
-        hostname: "localhost",
       },
       {
         protocol: "https",
@@ -44,6 +34,10 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "images.unsplash.com",
+      },
+      {
+        protocol: "https",
+        hostname: "assets.lottiefiles.com",
       },
     ],
   },
