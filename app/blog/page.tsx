@@ -6,7 +6,7 @@ import FaqSection from "@/components/FaqSection";
 import CtaSection from "@/components/CtaSection";
 import type { Metadata } from "next";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "The BlogItems Blog | Modern Web Engineering & Headless CMS Insights",
@@ -101,9 +101,20 @@ const FALLBACK_POSTS: Post[] = [
 export default async function BlogPage(props: {
   searchParams?: Promise<{ page?: string }>;
 }) {
-  const searchParams = props.searchParams ? await props.searchParams : {};
-  const rawPage = parseInt(searchParams.page || "1", 10);
-  const currentPage = Number.isInteger(rawPage) && rawPage > 0 ? rawPage : 1;
+  let rawPage = 1;
+  try {
+    const sp = props?.searchParams ? await props.searchParams : undefined;
+    if (sp?.page) {
+      const parsed = parseInt(sp.page, 10);
+      if (Number.isInteger(parsed) && parsed > 0) {
+        rawPage = parsed;
+      }
+    }
+  } catch {
+    // fallback to page 1
+  }
+
+  const currentPage = rawPage;
   const pageSize = 6;
 
   let posts: Post[] = [];
@@ -111,13 +122,15 @@ export default async function BlogPage(props: {
 
   try {
     const paginated = await getPaginatedPosts(currentPage, pageSize);
-    posts = paginated.posts;
-    totalPosts = paginated.totalPosts;
+    if (paginated && Array.isArray(paginated.posts) && paginated.posts.length > 0) {
+      posts = paginated.posts;
+      totalPosts = paginated.totalPosts || paginated.posts.length;
+    }
   } catch {
     // fallback
   }
 
-  if (!posts || !Array.isArray(posts) || posts.length === 0) {
+  if (!posts || posts.length === 0) {
     posts = FALLBACK_POSTS;
     totalPosts = FALLBACK_POSTS.length;
   }
