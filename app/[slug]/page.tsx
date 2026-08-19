@@ -262,7 +262,7 @@ export default async function DynamicWordPressPage({
           <div className="relative w-full h-[320px] md:h-[450px] mb-10 rounded-2xl overflow-hidden border border-[#000000] ui-card-shadow">
             <Image
               src={featuredImage.source_url}
-              alt={featuredImage.alt_text || page.title.rendered}
+              alt={featuredImage.alt_text || page?.title?.rendered || "Page"}
               fill
               className="object-cover"
               priority

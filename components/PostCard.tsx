@@ -5,10 +5,10 @@ import { Post, formatPostDate, calculateReadingTime, sanitizeHtml } from "@/lib/
 export default function PostCard({ post }: { post: Post }) {
   if (!post) return null;
 
-  const featuredImg = post._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
-  const altText = post._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || post.title.rendered;
-  const dateFormatted = formatPostDate(post.date?.rendered || (post as unknown as Record<string, string>).date);
-  const readingTime = calculateReadingTime(post.content?.rendered);
+  const featuredImg = post?._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
+  const altText = post?._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || post?.title?.rendered || "Article Image";
+  const dateFormatted = formatPostDate(post?.date?.rendered || (post as unknown as Record<string, string>)?.date);
+  const readingTime = calculateReadingTime(post?.content?.rendered);
 
   return (
     <Link href={`/blog/${post.slug}`} className="group block h-full">

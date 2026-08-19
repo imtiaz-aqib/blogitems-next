@@ -5,11 +5,11 @@ import { Post, formatPostDate, calculateReadingTime, sanitizeHtml } from "@/lib/
 export default function FeaturedPostCard({ post }: { post: Post }) {
   if (!post) return null;
 
-  const featuredImg = post._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
-  const altText = post._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || post.title.rendered;
-  const authorName = post._embedded?.["author"]?.[0]?.name || "BlogItems Editorial";
-  const dateFormatted = formatPostDate(post.date?.rendered || (post as unknown as Record<string, string>).date);
-  const readingTime = calculateReadingTime(post.content?.rendered);
+  const featuredImg = post?._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
+  const altText = post?._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || post?.title?.rendered || "Article Image";
+  const authorName = post?._embedded?.["author"]?.[0]?.name || "BlogItems Editorial";
+  const dateFormatted = formatPostDate(post?.date?.rendered || (post as unknown as Record<string, string>)?.date);
+  const readingTime = calculateReadingTime(post?.content?.rendered);
 
   return (
     <div className="mb-12">
