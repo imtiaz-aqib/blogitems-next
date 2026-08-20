@@ -1,3 +1,5 @@
+"use client";
+
 import { Post } from "@/lib/wordpress";
 import FeaturedPostCard from "@/components/FeaturedPostCard";
 import PostCard from "@/components/PostCard";
