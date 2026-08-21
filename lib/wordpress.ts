@@ -259,7 +259,8 @@ export function calculateReadingTime(htmlContent?: string): string {
 export function sanitizeHtml(rawHtml?: string): string {
   if (!rawHtml) return "";
   const cleaned = DOMPurify.sanitize(rawHtml, {
-    ADD_ATTR: ["target", "rel"],
+    ADD_TAGS: ["iframe", "video", "audio", "source"],
+    ADD_ATTR: ["target", "rel", "allow", "allowfullscreen", "frameborder", "scrolling", "loading"],
   });
 
   // Strict enforcement: Ensure all target="_blank" links have rel="noopener noreferrer"

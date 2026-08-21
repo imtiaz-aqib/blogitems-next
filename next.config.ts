@@ -5,9 +5,9 @@ const cspHeader = `
   script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://va.vercel-scripts.com https://challenges.cloudflare.com;
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   font-src 'self' https://fonts.gstatic.com data:;
-  img-src 'self' data: blob: https://aqib-xyz.stackstaging.com https://blogitems.com https://www.blogitems.com https://images.unsplash.com https://assets.lottiefiles.com https://lottie.host https://*.lottiefiles.com;
+  img-src 'self' data: blob: https:;
   connect-src 'self' https://aqib-xyz.stackstaging.com https://api.resend.com https://vitals.vercel-insights.com https://va.vercel-scripts.com https://*.upstash.io https://lottie.host https://*.lottie.host https://assets.lottiefiles.com https://*.lottiefiles.com https://challenges.cloudflare.com;
-  frame-src 'self' https://challenges.cloudflare.com;
+  frame-src 'self' https://challenges.cloudflare.com https://www.youtube.com https://www.youtube-nocookie.com;
   worker-src 'self' blob:;
   child-src 'self' blob:;
   object-src 'none';
@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "aqib-xyz.stackstaging.com",
+        hostname: "**.stackstaging.com",
       },
       {
         protocol: "https",
@@ -34,6 +34,22 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "images.unsplash.com",
+      },
+      {
+        protocol: "https",
+        hostname: "metalbear.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.wp.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.gravatar.com",
+      },
+      {
+        protocol: "https",
+        hostname: "i.ytimg.com",
       },
       {
         protocol: "https",
